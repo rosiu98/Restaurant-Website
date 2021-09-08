@@ -3,8 +3,10 @@ import CartScreen from "./screens/CartScreen";
 import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
 import OrderScreen from "./screens/OrderScreen";
+import OrdersListScreen from "./screens/OrdersListScreen";
 import PaymentScreen from "./screens/PaymentScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
+import ProductEditScreen from "./screens/ProductEditScreen";
 import ProductListScreen from "./screens/ProductListScreen";
 import ProductScreen from "./screens/ProductScreen";
 import ProfileScreen from "./screens/ProfileScreen";
@@ -26,8 +28,10 @@ function App() {
       <Route path="/menu/:id" component={ProductScreen} />
       <Route path="/cart/:id?" component={CartScreen} />
       <Route path="/admin/userlist" component={UserListScreen} />
+      <Route path="/admin/orderlist" component={OrdersListScreen} />
       <Route path="/admin/user/:id/edit" component={UserEditScreen} />
       <Route path="/admin/productlist" component={ProductListScreen} />
+      <Route path="/admin/products/:id/edit" component={ProductEditScreen} />
 
       <Route path="/" component={HomeScreen} exact />
     </Router>

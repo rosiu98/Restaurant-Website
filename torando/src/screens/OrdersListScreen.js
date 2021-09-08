@@ -5,12 +5,7 @@ import "../table.css";
 import Loading from "../components/Loading";
 import Navbar from "../components/Navbar";
 import { Message } from "../components/Message";
-import {
-  listProducts,
-  deleteProduct,
-  createProduct,
-} from "../actions/productActions";
-import { PRODUCT_CREATE_RESET } from "../constants/productConstants";
+import { listOrders } from "../actions/orderActions";
 import styled from "styled-components";
 
 const ButtonDelete = styled.button``;
@@ -27,67 +22,29 @@ const ButtonCreateProduct = styled.button`
   cursor: pointer;
 `;
 
-const ProductListScreen = ({ history, match }) => {
+const OrdersListScreen = ({ history, match }) => {
   const dispatch = useDispatch();
 
-  const productList = useSelector((state) => state.productList);
-  const { loading, error, products } = productList;
-
-  const productDelete = useSelector((state) => state.productDelete);
-  const {
-    loading: loadingDelete,
-    error: errorDelete,
-    success: successDelete,
-  } = productDelete;
-
-  const productCreate = useSelector((state) => state.productCreate);
-  const {
-    loading: loadingCreate,
-    error: errorCreate,
-    success: successCreate,
-    product: createdProduct,
-  } = productCreate;
+  const orderList = useSelector((state) => state.orderList);
+  const { loading, error, orders } = orderList;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   useEffect(() => {
-    dispatch({ type: PRODUCT_CREATE_RESET });
     if (!userInfo.isAdmin) {
       history.push("/login");
-    }
-    if (successCreate) {
-      history.push(`/admin/products/${createdProduct._id}/edit`);
     } else {
-      dispatch(listProducts());
+      dispatch(listOrders());
     }
-  }, [
-    dispatch,
-    history,
-    userInfo,
-    successDelete,
-    successCreate,
-    createdProduct,
-  ]);
+  }, [dispatch, history, userInfo]);
 
-  const deleteHandler = (id) => {
-    if (window.confirm("Are you sure ")) {
-      dispatch(deleteProduct(id));
-    }
-  };
-
-  const createProductHandler = () => {
-    dispatch(createProduct());
-  };
+  const createProductHandler = () => {};
 
   return (
     <>
       <Navbar />
       <section>
-        {loadingDelete && <Loading />}
-        {errorDelete && <Message color={"red"}>{errorDelete}</Message>}
-        {loadingCreate && <Loading />}
-        {errorCreate && <Message color={"red"}>{errorCreate}</Message>}
         {loading ? (
           <Loading />
         ) : error ? (
@@ -100,7 +57,7 @@ const ProductListScreen = ({ history, match }) => {
               </ButtonCreateProduct>
             </div>
             <table>
-              <caption>Products</caption>
+              <caption>Orders</caption>
               <thead>
                 <tr>
                   <th scope="col">ID</th>
@@ -111,7 +68,7 @@ const ProductListScreen = ({ history, match }) => {
                 </tr>
               </thead>
               <tbody>
-                {products.map((product) => (
+                {orders.map((product) => (
                   <tr key={product._id}>
                     <td data-label="ID">{product._id}</td>
                     <td data-label="NAME">{product.name}</td>
@@ -121,7 +78,7 @@ const ProductListScreen = ({ history, match }) => {
                       <Link to={`/admin/product/${product._id}/edit`}>
                         <i className="fas fa-edit"></i>
                       </Link>
-                      <ButtonDelete onClick={() => deleteHandler(product._id)}>
+                      <ButtonDelete>
                         <i className="fas fa-trash"></i>
                       </ButtonDelete>
                     </td>
@@ -136,4 +93,4 @@ const ProductListScreen = ({ history, match }) => {
   );
 };
 
-export default ProductListScreen;
+export default OrdersListScreen;
