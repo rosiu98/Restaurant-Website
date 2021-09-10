@@ -61,26 +61,45 @@ const OrdersListScreen = ({ history, match }) => {
               <thead>
                 <tr>
                   <th scope="col">ID</th>
-                  <th scope="col">NAME</th>
-                  <th scope="col">PRICE</th>
-                  <th scope="col">CATEGORY</th>
+                  <th scope="col">USER</th>
+                  <th scope="col">DATE</th>
+                  <th scope="col">TOTAL</th>
+                  <th scope="col">PAID</th>
+                  <th scope="col">DELIVERED</th>
                   <th scope="col">f()</th>
                 </tr>
               </thead>
               <tbody>
-                {orders.map((product) => (
-                  <tr key={product._id}>
-                    <td data-label="ID">{product._id}</td>
-                    <td data-label="NAME">{product.name}</td>
-                    <td data-label="PRICE">${product.price}</td>
-                    <td data-label="CATEGORY">{product.category}</td>
+                {orders.map((order) => (
+                  <tr key={order._id}>
+                    <td data-label="ID">{order._id}</td>
+                    <td data-label="USER">{order.user && order.user.name}</td>
+                    <td data-label="DATE">
+                      {order.createdAt.substring(0, 10)}
+                    </td>
+                    <td data-label="TOTAL">${order.totalPrice}</td>
+                    <td data-label="PAID">
+                      {order.isPaid ? (
+                        order.paidAt.substring(0, 10)
+                      ) : (
+                        <i
+                          className="fas fa-times"
+                          style={{ color: "red" }}
+                        ></i>
+                      )}
+                    </td>
+                    <td data-label="DELIVERED">
+                      {order.isDelivered ? (
+                        order.deliveredAt.substring(0, 10)
+                      ) : (
+                        <i
+                          className="fas fa-times"
+                          style={{ color: "red" }}
+                        ></i>
+                      )}
+                    </td>
                     <td data-label="f()">
-                      <Link to={`/admin/product/${product._id}/edit`}>
-                        <i className="fas fa-edit"></i>
-                      </Link>
-                      <ButtonDelete>
-                        <i className="fas fa-trash"></i>
-                      </ButtonDelete>
+                      <Link to={`/order/${order._id}`}>Details</Link>
                     </td>
                   </tr>
                 ))}
