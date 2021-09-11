@@ -1,4 +1,5 @@
 import React from "react";
+import Meta from "../components/Meta";
 import Navbar from "../components/Navbar";
 import BlogScreen from "./BlogScreen";
 import FooterScreen from "./FooterScreen";
@@ -11,6 +12,7 @@ import SpecialScreen from "./SpecialScreen";
 const HomeScreen = () => {
   return (
     <>
+      <Meta />
       <Navbar />
       <LandingScreen />
       <PopularScreen />

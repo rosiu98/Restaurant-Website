@@ -63,7 +63,7 @@ const createProduct = asyncHandler(async (req, res) => {
 const updateProduct = asyncHandler(async (req, res) => {
   const { name, price, description, image, category } = req.body;
 
-  const product = await Product.findById(req.params.id);
+  const product = await Product.findByIdAndUpdate(req.params.id);
 
   if (product) {
     product.name = name;
@@ -120,6 +120,15 @@ const createProductReview = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc Get top reated products
+// @route POST /api/products/top
+// @access Public
+const getTopProducts = asyncHandler(async (req, res) => {
+  const products = await Product.find({}).sort({ rating: -1 }).limit(3);
+
+  res.json(products);
+});
+
 export {
   getProducts,
   getProductById,
@@ -127,4 +136,5 @@ export {
   createProduct,
   updateProduct,
   createProductReview,
+  getTopProducts,
 };

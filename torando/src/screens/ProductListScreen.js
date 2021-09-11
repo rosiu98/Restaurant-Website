@@ -118,7 +118,7 @@ const ProductListScreen = ({ history, match }) => {
                     <td data-label="PRICE">${product.price}</td>
                     <td data-label="CATEGORY">{product.category}</td>
                     <td data-label="f()">
-                      <Link to={`/admin/product/${product._id}/edit`}>
+                      <Link to={`/admin/products/${product._id}/edit`}>
                         <i className="fas fa-edit"></i>
                       </Link>
                       <ButtonDelete onClick={() => deleteHandler(product._id)}>

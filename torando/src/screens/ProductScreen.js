@@ -5,9 +5,18 @@ import Rating from "../components/Rating";
 import Navbar from "../components/Navbar";
 import styled from "styled-components";
 import FooterScreen from "./FooterScreen";
-import { listProductDetails } from "../actions/productActions";
+import {
+  listProductDetails,
+  createProductReview,
+} from "../actions/productActions";
 import Loading from "../components/Loading";
 import { useState } from "react";
+import { PRODUCT_CREATE_REVIEW_RESET } from "../constants/productConstants";
+import { Message } from "../components/Message";
+import { Link } from "react-router-dom";
+import { ButtonAddToCart2 } from "./CartScreen";
+import ProductTop from "../components/ProductTop";
+import Meta from "../components/Meta";
 
 const ProductDetails = styled.section`
   padding-top: 12rem;
@@ -130,6 +139,8 @@ export const ButtonAddToCart = styled.a`
 
 const ProductScreen = ({ match, history }) => {
   const [qty, setQty] = useState(1);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
 
   const decreaseInput = () => {
     if (qty > 1) setQty(qty - 1);
@@ -138,15 +149,37 @@ const ProductScreen = ({ match, history }) => {
   const dispatch = useDispatch();
 
   const productDetails = useSelector((state) => state.productDetails);
-
   const { loading, error, product } = productDetails;
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const productReviewCreate = useSelector((state) => state.productReviewCreate);
+  const { success: successProductReview, error: errorProductReview } =
+    productReviewCreate;
+
   useEffect(() => {
+    if (successProductReview) {
+      alert("Review Submitted!");
+      setRating(0);
+      setComment("");
+      dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
+    }
     dispatch(listProductDetails(match.params.id));
-  }, [match, dispatch]);
+  }, [match, dispatch, successProductReview]);
 
   const addToCartHandler = () => {
     history.push(`/cart/${match.params.id}?qty=${qty}`);
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(
+      createProductReview(match.params.id, {
+        rating,
+        comment,
+      })
+    );
   };
 
   return (
@@ -158,45 +191,106 @@ const ProductScreen = ({ match, history }) => {
       ) : error ? (
         <h1>{error}</h1>
       ) : (
-        <ProductDetails>
-          <ProductImage>
-            <img src={`/${product.image}`} alt={product.name} />
-          </ProductImage>
-          <ProductContent>
-            <ProductTitle>
-              <h1>{product.name}</h1>
-              <p>{product.description}</p>
-              <ul>
-                <li>Great feature with amzing</li>
-                <li>sound 100% new trend with much more</li>
-                <li>color Unlimited guarantee</li>
-              </ul>
-            </ProductTitle>
-            <ProductPrice>
-              <p>${product.price}.99</p>
-              <Rating
-                value={product.rating}
-                text={`${product.numReviews} Reviews`}
-              />
-            </ProductPrice>
-            <ProductButtons>
-              <ProductQty>
-                <p>QUANTITY</p>
-                <div onClick={decreaseInput}>-</div>
-                <input
-                  type="number"
-                  value={qty}
-                  onChange={(e) => setQty(e.target.value)}
+        <>
+          <Meta title={product.name} />
+          <ProductDetails>
+            <ProductImage>
+              <img src={`/${product.image}`} alt={product.name} />
+            </ProductImage>
+            <ProductContent>
+              <ProductTitle>
+                <h1>{product.name}</h1>
+                <p>{product.description}</p>
+                <ul>
+                  <li>Great feature with amzing</li>
+                  <li>sound 100% new trend with much more</li>
+                  <li>color Unlimited guarantee</li>
+                </ul>
+              </ProductTitle>
+              <ProductPrice>
+                <p>${product.price}.99</p>
+                <Rating
+                  value={product.rating}
+                  text={`${product.numReviews} Reviews`}
                 />
-                <div onClick={() => setQty(qty + 1)}>+</div>
-              </ProductQty>
-              <ButtonAddToCart onClick={addToCartHandler}>
-                ADD TO CART
-              </ButtonAddToCart>
-            </ProductButtons>
-          </ProductContent>
-        </ProductDetails>
+              </ProductPrice>
+              <ProductButtons>
+                <ProductQty>
+                  <p>QUANTITY</p>
+                  <div onClick={decreaseInput}>-</div>
+                  <input
+                    type="number"
+                    value={qty}
+                    onChange={(e) => setQty(e.target.value)}
+                  />
+                  <div onClick={() => setQty(qty + 1)}>+</div>
+                </ProductQty>
+                <ButtonAddToCart onClick={addToCartHandler}>
+                  ADD TO CART
+                </ButtonAddToCart>
+              </ProductButtons>
+            </ProductContent>
+            <div className="reviews">
+              <h2 className="review-title">Reviews</h2>
+              {product.reviews.length === 0 && (
+                <div
+                  style={{
+                    marginLeft: "3rem",
+                    marginBottom: "2rem",
+                  }}
+                >
+                  <Message color={"#5f95e7b8"}>No Reviews </Message>
+                </div>
+              )}
+              {product.reviews.map((review) => (
+                <ul className="review-comment" key={review._id}>
+                  <strong>{review.name}</strong>
+                  <Rating value={review.rating} />
+                  <p>{review.createdAt.substring(0, 10)}</p>
+                  <p>{review.comment}</p>
+                </ul>
+              ))}
+              <ul className="customer-review">
+                <h2>Write a Customer Review</h2>
+                {errorProductReview && (
+                  <Message color={"red"}>{errorProductReview} </Message>
+                )}
+                {userInfo ? (
+                  <form className="comment-form" onSubmit={submitHandler}>
+                    <label htmlFor="rating">Rating</label>
+                    <select
+                      name="rating"
+                      id="rating"
+                      value={rating}
+                      onChange={(e) => setRating(e.target.value)}
+                    >
+                      <option value="">Select...</option>
+                      <option value="1">1 - Poor</option>
+                      <option value="2">2 - Fair</option>
+                      <option value="3">3 - Good</option>
+                      <option value="4">4 - Very Good</option>
+                      <option value="5">5 - Excelent</option>
+                    </select>
+                    <label htmlFor="comment">Comment</label>
+                    <textarea
+                      row="3"
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                    />
+                    <ButtonAddToCart2 type="submit">Submit</ButtonAddToCart2>
+                  </form>
+                ) : (
+                  <Message>
+                    Please <Link to="/login">sign in</Link> to write a review
+                  </Message>
+                )}
+              </ul>
+            </div>
+          </ProductDetails>
+        </>
       )}
+
+      <ProductTop />
       <FooterScreen />
     </div>
   );

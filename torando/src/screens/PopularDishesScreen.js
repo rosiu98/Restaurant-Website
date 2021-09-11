@@ -7,7 +7,7 @@ import styled from "styled-components";
 import Rating from "../components/Rating";
 import Loading from "../components/Loading";
 
-const Grid = styled.div`
+export const Grid = styled.div`
   margin-top: 6.5rem;
   display: grid;
   grid-template-columns: max-content max-content max-content;
@@ -20,7 +20,7 @@ const Grid = styled.div`
   }
 `;
 
-const GridItem = styled.div`
+export const GridItem = styled.div`
   padding: 6rem;
   background-color: #faf7f2;
   border-radius: 4rem;
@@ -37,13 +37,13 @@ const GridItem = styled.div`
   }
 `;
 
-const GridImage = styled.img`
+export const GridImage = styled.img`
   width: 220px;
-  min-height: 170px;
+  height: 170px;
   object-fit: scale-down;
 `;
 
-const GridName = styled.div`
+export const GridName = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -56,13 +56,13 @@ const GridName = styled.div`
   }
 `;
 
-const GridTitle = styled.h3`
+export const GridTitle = styled.h3`
   font-size: 2rem;
   font-weight: bold;
   margin: 1rem 0 1rem 0;
 `;
 
-const GridPrice = styled.p`
+export const GridPrice = styled.p`
   font-size: 1.4rem;
   font-weight: 500;
   margin: 0;

@@ -376,6 +376,13 @@ main {
   text-align: center;
 }
 
+.item-photo img {
+  width: 100%;
+  max-width: 270px;
+  max-height: 170px;
+  object-fit: contain;
+}
+
 .swiper-container {
   margin-top: 8rem !important;
   width: 80%;
@@ -423,7 +430,7 @@ main {
 .swiper-button-next-unique img {
   width: 20px;
   height: 20px;
-  padding: 1.5rem;
+  padding: 0.6rem;
   border-radius: 50%;
   background-color: white;
 }
@@ -1129,4 +1136,65 @@ main {
 
 .form-edit h1 {
   font-size: 3rem;
+}
+
+.review-title {
+  color: var(--color-dark);
+  font-size: 3rem;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.review-comment {
+  margin-left: 3rem;
+}
+
+.review-comment p:last-of-type {
+  margin: 1rem 0 2rem 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.review-comment strong {
+  color: #8d8d8d;
+  letter-spacing: 1px;
+  font-size: 1.1rem;
+}
+
+.customer-review {
+  padding-top: 2rem;
+  border-top: 1px solid black;
+  margin-left: 3rem;
+}
+
+.customer-review h2 {
+  font-size: 2rem;
+  text-transform: uppercase;
+  opacity: 0.7;
+  letter-spacing: 0.8px;
+  margin-bottom: 1rem;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-form label {
+  color: #8d8d8d;
+  letter-spacing: 1px;
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+}
+
+.comment-form select,
+.comment-form textarea {
+  border: none;
+  background-color: #faf7f2;
+  padding: 1.5rem;
+  /* outline: grey solid 1px; */
+}
+
+.comment-form textarea {
+  margin-bottom: 1.5rem;
 }
