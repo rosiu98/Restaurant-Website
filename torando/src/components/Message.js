@@ -7,5 +7,5 @@ export const Message = styled.div`
   color: white;
   font-size: 1.3rem;
   font-weight: 500;
-  background-color: ${(props) => props.color};
+  background-color: ${(props) => props.color || "blue"};
 `;

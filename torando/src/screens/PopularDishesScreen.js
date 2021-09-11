@@ -22,7 +22,7 @@ export const Grid = styled.div`
 
 export const GridItem = styled.div`
   padding: 6rem;
-  background-color: #faf7f2;
+  background-color: ${(props) => props.color || "#faf7f2"};
   border-radius: 4rem;
   transition: 0.4s all ease-in;
 
