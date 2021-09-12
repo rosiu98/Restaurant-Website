@@ -42,9 +42,12 @@ const Navbar = () => {
       </div>
 
       <div className="buttons">
-        <a href="/" className="button-brown">
+        <Link
+          to={`${cartItems.length > 0 ? "/cart" : "/menu"}`}
+          className="button-brown"
+        >
           Order Online
-        </a>
+        </Link>
         <Link to="/cart" style={{ position: "relative" }}>
           <img src={icon} alt="icon-shop" />
           {cartItems.length > 0 && <span>{cartItems.length}</span>}
