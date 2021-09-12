@@ -1198,3 +1198,46 @@ main {
 .comment-form textarea {
   margin-bottom: 1.5rem;
 }
+
+.top-rated {
+  display: flex;
+  /* gap: 1.5rem; */
+  margin-bottom: 2.5rem;
+  justify-content: space-evenly;
+}
+
+.top-rated-image {
+  width: 100px;
+}
+
+.top-rated-image img {
+  width: 100%;
+  height: auto;
+}
+
+.top-rated-details {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.top-rated-details a {
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: "Roboto", sans-serif;
+  color: var(--color-dark);
+}
+
+.top-rated-details a:hover {
+  color: var(--color-yellow);
+}
+
+.top-rated-details p {
+  color: #b3b3b3;
+}
+
+@media (max-width: 1200px) {
+  html {
+    font-size: 50%;
+  }
+}

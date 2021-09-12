@@ -1,22 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { listProducts } from "../actions/productActions";
+import { listProducts, listTopProducts } from "../actions/productActions";
 import { Message } from "../components/Message";
 import Navbar from "../components/Navbar";
 import PageHero from "../components/PageHero";
+import Rating from "../components/Rating";
+import FooterScreen from "./FooterScreen";
 
 const GridMenu = styled.div`
   background-color: #faf7f2;
-  padding-top: 6.5rem;
+  padding: 6.5rem 3rem;
   display: grid;
   grid-template-columns: 0.7fr 0.2fr;
   grid-template-rows: auto;
   grid-template-areas: "items sidebar ";
   justify-content: center;
   grid-template-rows: auto;
-  gap: 3.5rem;
+  gap: 3rem;
 
   @media (max-width: 1000px) {
     padding: 0 5%;
@@ -33,6 +35,7 @@ const GridItems = styled.div`
   justify-content: center;
   grid-area: items;
   gap: 3rem;
+  align-items: center;
 `;
 
 const GridItem = styled.div`
@@ -106,6 +109,7 @@ const SearchBar = styled.div`
   background-color: white;
   padding: 3.5rem 2rem;
   border-radius: 15px;
+  margin-bottom: 3rem;
 
   & input {
     width: 100%;
@@ -133,6 +137,43 @@ const SearchBar = styled.div`
   }
 `;
 
+const Categories = styled.div`
+  background-color: white;
+  padding: 3.5rem 2rem;
+  border-radius: 15px;
+  margin-bottom: 3rem;
+
+  & :last-child {
+    margin: 0;
+  }
+
+  & button {
+    width: 100%;
+    padding: 2rem;
+    color: #949494;
+    margin-bottom: 2rem;
+    background-color: #fcfbf9;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--color-yellow);
+    }
+  }
+`;
+
+const TopProducts = styled.div`
+  background-color: white;
+  padding: 3.5rem 2rem;
+  border-radius: 15px;
+
+  & :last-child {
+    margin-bottom: 0;
+  }
+`;
+
 const MenuScreen = () => {
   const dispatch = useDispatch();
 
@@ -140,8 +181,32 @@ const MenuScreen = () => {
 
   const { loading, error, products } = productList;
 
+  const productTopRated = useSelector((state) => state.productTopRated);
+  const {
+    loading: loadingTopRated,
+    error: errorTopRated,
+    products: productsTop,
+  } = productTopRated;
+
+  const [menuItems, setMenuItems] = useState([]);
+
+  const uniqueValues = (data, type) => {
+    let unique = data.map((item) => item[type]);
+    return ["ALL", ...new Set(unique)];
+  };
+
+  const categories = uniqueValues(products, "category");
+
+  const filterItems = (category) => {
+    const newItems = products.filter((item) => item.category === category);
+    setMenuItems(newItems);
+    console.log(menuItems);
+  };
+
+  console.log(categories);
   useEffect(() => {
     dispatch(listProducts());
+    dispatch(listTopProducts());
   }, [dispatch]);
 
   return (
@@ -150,18 +215,31 @@ const MenuScreen = () => {
       <PageHero name={"MENU"} title={"/ Menu"} />
       <GridMenu>
         <GridItems>
-          {products.map((product) => (
-            <GridItem key={product._id}>
-              <Link to={`/menu/${product._id}`}>
-                <GridImage src={`/${product.image}`} alt={product.name} />
-                <GridName>
-                  <p>{product.category}</p>
-                </GridName>
-                <GridTitle>{product.name}</GridTitle>
-                <GridPrice>PRICE ${product.price}</GridPrice>
-              </Link>
-            </GridItem>
-          ))}
+          {menuItems.length > 0
+            ? menuItems.map((product) => (
+                <GridItem key={product._id}>
+                  <Link to={`/menu/${product._id}`}>
+                    <GridImage src={`/${product.image}`} alt={product.name} />
+                    <GridName>
+                      <p>{product.category}</p>
+                    </GridName>
+                    <GridTitle>{product.name}</GridTitle>
+                    <GridPrice>PRICE ${product.price}</GridPrice>
+                  </Link>
+                </GridItem>
+              ))
+            : products.map((product) => (
+                <GridItem key={product._id}>
+                  <Link to={`/menu/${product._id}`}>
+                    <GridImage src={`/${product.image}`} alt={product.name} />
+                    <GridName>
+                      <p>{product.category}</p>
+                    </GridName>
+                    <GridTitle>{product.name}</GridTitle>
+                    <GridPrice>PRICE ${product.price}</GridPrice>
+                  </Link>
+                </GridItem>
+              ))}
         </GridItems>
         <GridSidebar>
           <SearchBar>
@@ -171,8 +249,41 @@ const MenuScreen = () => {
               <i className="fas fa-search"></i>
             </div>
           </SearchBar>
+          <Categories>
+            <h3>CATEGORIES</h3>
+            <div>
+              {categories.map((c, index) => {
+                return (
+                  <button
+                    key={index}
+                    type="button"
+                    name="category"
+                    onClick={() => filterItems(c)}
+                  >
+                    {c}
+                  </button>
+                );
+              })}
+            </div>
+          </Categories>
+          <TopProducts>
+            <h3>TOP PRODUCTS</h3>
+            {productsTop.map((product) => (
+              <div className="top-rated">
+                <div className="top-rated-image">
+                  <img src={`/${product.image}`} alt={product.name} />
+                </div>
+                <div className="top-rated-details">
+                  <Rating value={product.rating} />
+                  <Link to={`/menu/${product._id}`}>{product.name}</Link>
+                  <p>${product.price}</p>
+                </div>
+              </div>
+            ))}
+          </TopProducts>
         </GridSidebar>
       </GridMenu>
+      <FooterScreen />
     </>
   );
 };
