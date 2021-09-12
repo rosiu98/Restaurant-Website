@@ -6,8 +6,15 @@ import instagram from "../img/instagram.svg";
 import circle from "../img/circle.png";
 import leafs from "../img/leafs.png";
 import kolo from "../img/kolo.png";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 const LandingScreen = () => {
+  const dispatch = useDispatch();
+
+  const cart = useSelector((state) => state.cart);
+  const { cartItems } = cart;
+
   return (
     <main>
       <div className="content">
@@ -22,12 +29,15 @@ const LandingScreen = () => {
         </div>
 
         <div className="content-buttons">
-          <a href="/" className="button-brown">
+          <Link
+            to={`${cartItems.length > 0 ? "/cart" : "/menu"}`}
+            className="button-brown"
+          >
             Order Online
-          </a>
-          <a href="/" className="button-yellow">
+          </Link>
+          <Link to='/menu' className="button-yellow">
             Menu
-          </a>
+          </Link>
         </div>
 
         <div className="content-links">

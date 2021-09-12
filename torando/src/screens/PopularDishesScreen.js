@@ -69,7 +69,7 @@ export const GridPrice = styled.p`
   color: #1e1d23;
 `;
 
-export const ProductButton = styled.a`
+export const ProductButton = styled(Link)`
   /* margin-top: 6rem;
   margin-bottom: 5rem; */
   background-color: var(--color-brown);
@@ -79,6 +79,12 @@ export const ProductButton = styled.a`
   font-size: 1.8rem;
   font-weight: bold;
   border-radius: 2rem;
+
+  &:hover {
+    background-color: var(--color-yellow);
+    transform: scale(1.05);
+    transition: 0.2s all;
+  }
 `;
 
 const PopularDishesScreen = () => {
@@ -132,7 +138,7 @@ const PopularDishesScreen = () => {
         </Grid>
       )}
       <div style={{ textAlign: "center", marginTop: "6rem" }}>
-        <ProductButton>SEE ALL PRODUCTS</ProductButton>
+        <ProductButton to="/menu">SEE ALL PRODUCTS</ProductButton>
       </div>
     </div>
   );

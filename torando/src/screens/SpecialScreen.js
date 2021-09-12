@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const SpecialScreen = () => {
   return (
@@ -21,9 +22,9 @@ const SpecialScreen = () => {
           </p>
         </div>
         <div className="special-footer">
-          <a href="/" className="button-brown">
+          <Link to="/menu" className="button-brown">
             Order Online
-          </a>
+          </Link>
           <div className="special-offer">
             <p>
               $46.99 <span>$59.99</span>

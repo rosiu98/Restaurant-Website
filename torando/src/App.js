@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import BlogExample from "./screens/BlogExample";
 import CartScreen from "./screens/CartScreen";
 import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/LoginScreen";
@@ -19,6 +20,7 @@ import UserListScreen from "./screens/UserListScreen";
 function App() {
   return (
     <Router>
+      <Route path="/blogs" component={BlogExample} />
       <Route path="/order/:id" component={OrderScreen} />
       <Route path="/placeorder" component={PlaceOrderScreen} />
       <Route path="/payment" component={PaymentScreen} />

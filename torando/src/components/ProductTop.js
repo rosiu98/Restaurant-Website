@@ -44,7 +44,7 @@ const ProductTop = () => {
         width: "80%",
         margin: "0 auto",
         position: "relative",
-        marginBottom: "8rem",
+        marginBottom: "12rem",
       }}
     >
       <Heading paragraph={"Our Popular Products"} />
