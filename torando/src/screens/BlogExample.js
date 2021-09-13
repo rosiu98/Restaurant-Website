@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import blog from "../blog";
 import Navbar from "../components/Navbar";
 import PageHero from "../components/PageHero";
+import FooterScreen from "./FooterScreen";
 
 const BlogExample = () => {
-  console.log(blog);
   return (
     <>
       <Navbar />
@@ -43,6 +43,7 @@ const BlogExample = () => {
           </div>
         </div>
       </div>
+      <FooterScreen />
     </>
   );
 };
