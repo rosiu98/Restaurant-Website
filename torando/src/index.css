@@ -1300,6 +1300,13 @@ main {
   margin: 3rem 0 2rem 1rem;
 }
 
+.blog-date p {
+  color: #706c61 !important;
+  font-size: 1.5rem !important;
+  line-height: 1.2 !important;
+  width: auto !important;
+}
+
 .blog-date i {
   padding-bottom: 3px;
 }
