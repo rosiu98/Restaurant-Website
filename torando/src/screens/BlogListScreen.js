@@ -1,0 +1,139 @@
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import "../table.css";
+import Loading from "../components/Loading";
+import Navbar from "../components/Navbar";
+import { Message } from "../components/Message";
+import {
+  listProducts,
+  deleteProduct,
+  createProduct,
+} from "../actions/productActions";
+import { PRODUCT_CREATE_RESET } from "../constants/productConstants";
+import styled from "styled-components";
+
+const ButtonDelete = styled.button``;
+
+const ButtonCreateProduct = styled.button`
+  background-color: #b3b3b3bf;
+  padding: 1.5rem 3rem;
+  color: white;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-weight: bold;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+`;
+
+const BlogListScreen = ({ history, match }) => {
+  const dispatch = useDispatch();
+
+  const blogList = useSelector((state) => state.blogList);
+  const { loading, error, blogs } = blogList;
+
+  const productDelete = useSelector((state) => state.productDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = productDelete;
+
+  const productCreate = useSelector((state) => state.productCreate);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    product: createdProduct,
+  } = productCreate;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  useEffect(() => {
+    dispatch({ type: PRODUCT_CREATE_RESET });
+    if (!userInfo.isAdmin) {
+      history.push("/login");
+    }
+    if (successCreate) {
+      history.push(`/admin/products/${createdProduct._id}/edit`);
+    } else {
+      dispatch(listProducts());
+    }
+  }, [
+    dispatch,
+    history,
+    userInfo,
+    successDelete,
+    successCreate,
+    createdProduct,
+  ]);
+
+  const deleteHandler = (id) => {
+    if (window.confirm("Are you sure ")) {
+      dispatch(deleteProduct(id));
+    }
+  };
+
+  const createProductHandler = () => {
+    dispatch(createProduct());
+  };
+
+  return (
+    <>
+      <Navbar />
+      <section>
+        {loadingDelete && <Loading />}
+        {errorDelete && <Message color={"red"}>{errorDelete}</Message>}
+        {loadingCreate && <Loading />}
+        {errorCreate && <Message color={"red"}>{errorCreate}</Message>}
+        {loading ? (
+          <Loading />
+        ) : error ? (
+          <Message color={"red"}>{error}</Message>
+        ) : (
+          <>
+            <div style={{ textAlign: "right" }}>
+              <ButtonCreateProduct onClick={createProductHandler}>
+                <i className="fas fa-plus"></i> Create Product
+              </ButtonCreateProduct>
+            </div>
+            <table>
+              <caption>Products</caption>
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">NAME</th>
+                  <th scope="col">PRICE</th>
+                  <th scope="col">CATEGORY</th>
+                  <th scope="col">f()</th>
+                </tr>
+              </thead>
+              <tbody>
+                {blogs.map((blog) => (
+                  <tr key={blog._id}>
+                    <td data-label="ID">{blog._id}</td>
+                    <td data-label="NAME">{blog.name}</td>
+                    <td data-label="PRICE">${blog.price}</td>
+                    <td data-label="CATEGORY">{blog.category}</td>
+                    <td data-label="f()">
+                      <Link to={`/admin/blogs/${blog._id}/edit`}>
+                        <i className="fas fa-edit"></i>
+                      </Link>
+                      <ButtonDelete onClick={() => deleteHandler(blog._id)}>
+                        <i className="fas fa-trash"></i>
+                      </ButtonDelete>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </>
+        )}
+      </section>
+    </>
+  );
+};
+
+export default BlogListScreen;
