@@ -6,7 +6,7 @@ import User from "../models/userModel.js";
 // @ GET /api/blogs
 // @ Public
 const getAllBlogs = asyncHandler(async (req, res) => {
-  const blogs = await Blog.find({}).populate("user");
+  const blogs = await Blog.find({});
 
   res.json(blogs);
 });
@@ -15,7 +15,7 @@ const getAllBlogs = asyncHandler(async (req, res) => {
 // @route GET /api/products/:id
 // @access Public
 const getBlogById = asyncHandler(async (req, res) => {
-  const blog = await Blog.findById(req.params.id);
+  const blog = await Blog.findById(req.params.id).populate("user");
 
   if (blog) {
     res.json(blog);

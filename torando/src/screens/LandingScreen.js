@@ -7,11 +7,9 @@ import circle from "../img/circle.png";
 import leafs from "../img/leafs.png";
 import kolo from "../img/kolo.png";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const LandingScreen = () => {
-  const dispatch = useDispatch();
-
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
@@ -35,7 +33,7 @@ const LandingScreen = () => {
           >
             Order Online
           </Link>
-          <Link to='/menu' className="button-yellow">
+          <Link to="/menu" className="button-yellow">
             Menu
           </Link>
         </div>

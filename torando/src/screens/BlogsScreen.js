@@ -39,13 +39,15 @@ const BlogExample = () => {
                   <p>{blog.user.name}</p>
                 </div>
                 <div className="blog-title">
-                  <h2>{blog.title}</h2>
+                  <h2>
+                    <Link to={`/blogs/${blog._id}`}>{blog.title}</Link>
+                  </h2>
                 </div>
                 <div className="blog-description">
                   <p>{blog.description}</p>
                 </div>
                 <div className="blog-buttons">
-                  <Link to="/" className="button-brown">
+                  <Link to={`/blogs/${blog._id}`} className="button-brown">
                     READ MORE
                   </Link>
                 </div>

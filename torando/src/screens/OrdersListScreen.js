@@ -6,21 +6,6 @@ import Loading from "../components/Loading";
 import Navbar from "../components/Navbar";
 import { Message } from "../components/Message";
 import { listOrders } from "../actions/orderActions";
-import styled from "styled-components";
-
-const ButtonDelete = styled.button``;
-
-const ButtonCreateProduct = styled.button`
-  background-color: #b3b3b3bf;
-  padding: 1.5rem 3rem;
-  color: white;
-  text-decoration: none;
-  font-size: 1.8rem;
-  font-weight: bold;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-`;
 
 const OrdersListScreen = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -39,8 +24,6 @@ const OrdersListScreen = ({ history, match }) => {
     }
   }, [dispatch, history, userInfo]);
 
-  const createProductHandler = () => {};
-
   return (
     <>
       <Navbar />
@@ -51,11 +34,6 @@ const OrdersListScreen = ({ history, match }) => {
           <Message color={"red"}>{error}</Message>
         ) : (
           <>
-            <div style={{ textAlign: "right" }}>
-              <ButtonCreateProduct onClick={createProductHandler}>
-                <i className="fas fa-plus"></i> Create Product
-              </ButtonCreateProduct>
-            </div>
             <table>
               <caption>Orders</caption>
               <thead>
@@ -66,7 +44,7 @@ const OrdersListScreen = ({ history, match }) => {
                   <th scope="col">TOTAL</th>
                   <th scope="col">PAID</th>
                   <th scope="col">DELIVERED</th>
-                  <th scope="col">f()</th>
+                  <th scope="col">LINK</th>
                 </tr>
               </thead>
               <tbody>
@@ -98,7 +76,7 @@ const OrdersListScreen = ({ history, match }) => {
                         ></i>
                       )}
                     </td>
-                    <td data-label="f()">
+                    <td data-label="LINK">
                       <Link to={`/order/${order._id}`}>Details</Link>
                     </td>
                   </tr>

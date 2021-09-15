@@ -48,14 +48,16 @@ const PageH1 = styled.h1`
   font-family: "Lilita One", cursive;
 `;
 
-const PageHero = ({ title, product, name }) => {
+const PageHero = ({ title, product, blogs, name }) => {
   return (
     <PageWrapper>
       <PageSection>
         <div>
           <PageH1>{name}</PageH1>
           <Link to="/">Home </Link>
-          {product && <Link to="/menu">/ Menu / </Link>} <span> {title}</span>
+          {product && <Link to="/menu">/ Menu / </Link>}
+          {blogs && <Link to="/blogs">/ Blog / </Link>}
+          <span> {title}</span>
         </div>
         <div>
           <img src={chef} alt="chef" />

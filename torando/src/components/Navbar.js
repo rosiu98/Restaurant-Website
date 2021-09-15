@@ -39,6 +39,9 @@ const Navbar = () => {
         <NavLink activeClassName="active" to="/menu">
           MENU
         </NavLink>
+        <NavLink activeClassName="active" to="/blogs">
+          BLOG
+        </NavLink>
       </div>
 
       <div className="buttons">
@@ -78,6 +81,9 @@ const Navbar = () => {
                     </div>
                     <div className="links-item">
                       <Link to="/admin/orderlist">Order List</Link>
+                    </div>
+                    <div className="links-item">
+                      <Link to="/admin/blogs">Blogs</Link>
                     </div>
                   </>
                 )}

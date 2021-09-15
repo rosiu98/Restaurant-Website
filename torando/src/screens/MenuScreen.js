@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { listProducts, listTopProducts } from "../actions/productActions";
+import Loading from "../components/Loading";
 import { Message } from "../components/Message";
 import Navbar from "../components/Navbar";
 import PageHero from "../components/PageHero";
@@ -182,11 +183,7 @@ const MenuScreen = () => {
   const { loading, error, products } = productList;
 
   const productTopRated = useSelector((state) => state.productTopRated);
-  const {
-    loading: loadingTopRated,
-    error: errorTopRated,
-    products: productsTop,
-  } = productTopRated;
+  const { products: productsTop } = productTopRated;
 
   const [menuItems, setMenuItems] = useState([]);
 
@@ -200,10 +197,8 @@ const MenuScreen = () => {
   const filterItems = (category) => {
     const newItems = products.filter((item) => item.category === category);
     setMenuItems(newItems);
-    console.log(menuItems);
   };
 
-  console.log(categories);
   useEffect(() => {
     dispatch(listProducts());
     dispatch(listTopProducts());
@@ -213,77 +208,91 @@ const MenuScreen = () => {
     <>
       <Navbar />
       <PageHero name={"MENU"} title={"/ Menu"} />
-      <GridMenu>
-        <GridItems>
-          {menuItems.length > 0
-            ? menuItems.map((product) => (
-                <GridItem key={product._id}>
-                  <Link to={`/menu/${product._id}`}>
-                    <GridImage src={`/${product.image}`} alt={product.name} />
-                    <GridName>
-                      <p>{product.category}</p>
-                    </GridName>
-                    <GridTitle>{product.name}</GridTitle>
-                    <GridPrice>PRICE ${product.price}</GridPrice>
-                  </Link>
-                </GridItem>
-              ))
-            : products.map((product) => (
-                <GridItem key={product._id}>
-                  <Link to={`/menu/${product._id}`}>
-                    <GridImage src={`/${product.image}`} alt={product.name} />
-                    <GridName>
-                      <p>{product.category}</p>
-                    </GridName>
-                    <GridTitle>{product.name}</GridTitle>
-                    <GridPrice>PRICE ${product.price}</GridPrice>
-                  </Link>
-                </GridItem>
-              ))}
-        </GridItems>
-        <GridSidebar>
-          <SearchBar>
-            <h3>SEARCH HERE</h3>
-            <div>
-              <input type="text" placeholder="Search..." />
-              <i className="fas fa-search"></i>
-            </div>
-          </SearchBar>
-          <Categories>
-            <h3>CATEGORIES</h3>
-            <div>
-              {categories.map((c, index) => {
-                return (
-                  <button
-                    key={index}
-                    type="button"
-                    name="category"
-                    onClick={() => filterItems(c)}
-                  >
-                    {c}
-                  </button>
-                );
-              })}
-            </div>
-          </Categories>
-          <TopProducts>
-            <h3>TOP PRODUCTS</h3>
-            {productsTop.map((product) => (
-              <div className="top-rated">
-                <div className="top-rated-image">
-                  <img src={`/${product.image}`} alt={product.name} />
+      {loading ? (
+        <Loading />
+      ) : error ? (
+        <Message>{error}</Message>
+      ) : (
+        <>
+          <GridMenu>
+            <GridItems>
+              {menuItems.length > 0
+                ? menuItems.map((product) => (
+                    <GridItem key={product._id}>
+                      <Link to={`/menu/${product._id}`}>
+                        <GridImage
+                          src={`/${product.image}`}
+                          alt={product.name}
+                        />
+                        <GridName>
+                          <p>{product.category}</p>
+                        </GridName>
+                        <GridTitle>{product.name}</GridTitle>
+                        <GridPrice>PRICE ${product.price}</GridPrice>
+                      </Link>
+                    </GridItem>
+                  ))
+                : products.map((product) => (
+                    <GridItem key={product._id}>
+                      <Link to={`/menu/${product._id}`}>
+                        <GridImage
+                          src={`/${product.image}`}
+                          alt={product.name}
+                        />
+                        <GridName>
+                          <p>{product.category}</p>
+                        </GridName>
+                        <GridTitle>{product.name}</GridTitle>
+                        <GridPrice>PRICE ${product.price}</GridPrice>
+                      </Link>
+                    </GridItem>
+                  ))}
+            </GridItems>
+            <GridSidebar>
+              <SearchBar>
+                <h3>SEARCH HERE</h3>
+                <div>
+                  <input type="text" placeholder="Search..." />
+                  <i className="fas fa-search"></i>
                 </div>
-                <div className="top-rated-details">
-                  <Rating value={product.rating} />
-                  <Link to={`/menu/${product._id}`}>{product.name}</Link>
-                  <p>${product.price}</p>
+              </SearchBar>
+              <Categories>
+                <h3>CATEGORIES</h3>
+                <div>
+                  {categories.map((c, index) => {
+                    return (
+                      <button
+                        key={index}
+                        type="button"
+                        name="category"
+                        onClick={() => filterItems(c)}
+                      >
+                        {c}
+                      </button>
+                    );
+                  })}
                 </div>
-              </div>
-            ))}
-          </TopProducts>
-        </GridSidebar>
-      </GridMenu>
-      <FooterScreen />
+              </Categories>
+              <TopProducts>
+                <h3>TOP PRODUCTS</h3>
+                {productsTop.map((product) => (
+                  <div className="top-rated" key={product._id}>
+                    <div className="top-rated-image">
+                      <img src={`/${product.image}`} alt={product.name} />
+                    </div>
+                    <div className="top-rated-details">
+                      <Rating value={product.rating} />
+                      <Link to={`/menu/${product._id}`}>{product.name}</Link>
+                      <p>${product.price}</p>
+                    </div>
+                  </div>
+                ))}
+              </TopProducts>
+            </GridSidebar>
+          </GridMenu>
+          <FooterScreen />
+        </>
+      )}
     </>
   );
 };

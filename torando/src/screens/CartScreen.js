@@ -69,7 +69,7 @@ const EmptyCard = styled.div`
   & p {
     font-size: 1.8rem;
     color: grey;
-    padding-bottom: 1.5rem;
+    padding-bottom: 4rem;
   }
 
   &a {
@@ -126,7 +126,7 @@ const CartScreen = ({ match, location, history }) => {
                 anything to your cart
                 <br />
               </p>
-              <ButtonAddToCart to="/">See our Menu</ButtonAddToCart>
+              <ButtonAddToCart to="/menu">See our Menu</ButtonAddToCart>
             </EmptyCard>
           </>
         ) : (
@@ -141,46 +141,44 @@ const CartScreen = ({ match, location, history }) => {
               <div className="cart-trash"></div>
             </div>
             {cartItems.map((item) => (
-              <>
-                <div className="cart" key={item.product}>
-                  <Link to={`/menu/${item.product}`} className="cart-product">
-                    <div className="cart-product-image">
-                      <img src={`/${item.image}`} alt={item.name} />
-                    </div>
-                    <div className="cart-product-main">
-                      <h1>{item.name}</h1>
-                      <p>
-                        Price: <span>${item.price}.00</span>
-                      </p>
-                    </div>
-                  </Link>
-                  <div className="cart-qty">
-                    <div
-                      className="plus"
-                      onClick={() =>
-                        dispatch(addToCart(item.product, item.qty + 1))
-                      }
-                    >
-                      +
-                    </div>
-                    <input
-                      type="number"
-                      value={item.qty}
-                      onChange={(e) => e.target.value}
-                    />
-                    <div className="minus" onClick={() => minusHandler(item)}>
-                      -
-                    </div>
+              <div className="cart" key={item.product}>
+                <Link to={`/menu/${item.product}`} className="cart-product">
+                  <div className="cart-product-image">
+                    <img src={`/${item.image}`} alt={item.name} />
                   </div>
-                  <div className="cart-trash">
-                    <img
-                      onClick={() => removeFromCartHandler(item.product)}
-                      src={trash}
-                      alt="trash"
-                    />
+                  <div className="cart-product-main">
+                    <h1>{item.name}</h1>
+                    <p>
+                      Price: <span>${item.price}.00</span>
+                    </p>
+                  </div>
+                </Link>
+                <div className="cart-qty">
+                  <div
+                    className="plus"
+                    onClick={() =>
+                      dispatch(addToCart(item.product, item.qty + 1))
+                    }
+                  >
+                    +
+                  </div>
+                  <input
+                    type="number"
+                    value={item.qty}
+                    onChange={(e) => e.target.value}
+                  />
+                  <div className="minus" onClick={() => minusHandler(item)}>
+                    -
                   </div>
                 </div>
-              </>
+                <div className="cart-trash">
+                  <img
+                    onClick={() => removeFromCartHandler(item.product)}
+                    src={trash}
+                    alt="trash"
+                  />
+                </div>
+              </div>
             ))}
 
             <div className="cart-total">

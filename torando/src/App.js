@@ -21,8 +21,8 @@ import UserListScreen from "./screens/UserListScreen";
 function App() {
   return (
     <Router>
-      <Route path="/blog" component={BlogPageScreen} />
-      <Route path="/blogs" component={BlogsScreen} />
+      <Route path="/blogs/:id" component={BlogPageScreen} />
+      <Route path="/blogs" component={BlogsScreen} exact />
       <Route path="/order/:id" component={OrderScreen} />
       <Route path="/placeorder" component={PlaceOrderScreen} />
       <Route path="/payment" component={PaymentScreen} />

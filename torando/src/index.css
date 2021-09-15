@@ -973,6 +973,11 @@ main {
   width: 1170px;
 }
 
+.inputs-map button {
+  margin-top: 3rem;
+  grid-column: 1 / span 2;
+}
+
 .disabled-link {
   cursor: not-allowed;
   opacity: 0.5;
@@ -1321,7 +1326,12 @@ main {
   width: 95%;
 }
 
-.blog-title h2:hover {
+.blog-title a {
+  color: var(--color-dark);
+}
+
+.blog-title a:hover,
+h2:hover {
   color: var(--color-yellow);
   transition: 0.4s all;
 }
