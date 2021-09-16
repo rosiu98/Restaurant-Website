@@ -1,4 +1,8 @@
 import {
+  BLOG_CREATE_COMMENT_FAIL,
+  BLOG_CREATE_COMMENT_REQUEST,
+  BLOG_CREATE_COMMENT_RESET,
+  BLOG_CREATE_COMMENT_SUCCESS,
   BLOG_CREATE_FAIL,
   BLOG_CREATE_REQUEST,
   BLOG_CREATE_RESET,
@@ -97,6 +101,21 @@ export const blogUpdateReducer = (state = { blog: {} }, action) => {
     case BLOG_UPDATE_FAIL:
       return { loading: false, error: action.payload };
     case BLOG_UPDATE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const blogCommentCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case BLOG_CREATE_COMMENT_REQUEST:
+      return { loading: true };
+    case BLOG_CREATE_COMMENT_SUCCESS:
+      return { loading: false, success: true };
+    case BLOG_CREATE_COMMENT_FAIL:
+      return { loading: false, error: action.payload };
+    case BLOG_CREATE_COMMENT_RESET:
       return {};
     default:
       return state;

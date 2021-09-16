@@ -18,6 +18,7 @@ import {
   blogDeleteReducer,
   blogUpdateReducer,
   blogNewestReducer,
+  blogCommentCreateReducer,
 } from "./reducers/blogReducers";
 import { cartReducer } from "./reducers/cartReducers";
 import {
@@ -51,6 +52,7 @@ const reducer = combineReducers({
   blogCreate: blogCreateReducer,
   blogDelete: blogDeleteReducer,
   blogUpdate: blogUpdateReducer,
+  blogCommentCreate: blogCommentCreateReducer,
   cart: cartReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,

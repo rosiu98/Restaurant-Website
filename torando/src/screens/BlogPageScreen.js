@@ -1,13 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { listBlogDetails, listNewestBlogs } from "../actions/blogActions";
+import {
+  createBlogComment,
+  listBlogDetails,
+  listNewestBlogs,
+} from "../actions/blogActions";
 import Loading from "../components/Loading";
 import { Message } from "../components/Message";
 // import blog from "../blog";
 import Navbar from "../components/Navbar";
 import PageHero from "../components/PageHero";
+import { BLOG_CREATE_COMMENT_RESET } from "../constants/blogConstants";
+import { ButtonAddToCart2 } from "./CartScreen";
 import FooterScreen from "./FooterScreen";
 
 const BlogPageMain = styled.div`
@@ -114,7 +120,12 @@ const BlogNewestDesc = styled(Link)`
 `;
 
 const BlogPageScreen = ({ match }) => {
+  const [comment, setComment] = useState("");
+
   const dispatch = useDispatch();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   const blogDetails = useSelector((state) => state.blogDetails);
   const { loading, error, blog } = blogDetails;
@@ -122,12 +133,27 @@ const BlogPageScreen = ({ match }) => {
   const blogNewest = useSelector((state) => state.blogNewest);
   const { blogNew } = blogNewest;
 
+  const blogCommentCreate = useSelector((state) => state.blogCommentCreate);
+  const { success: successblogComment, error: errorblogComment } =
+    blogCommentCreate;
+
   useEffect(() => {
+    if (successblogComment) {
+      setComment("");
+      alert("Comment Added!");
+      dispatch({ type: BLOG_CREATE_COMMENT_RESET });
+    }
+
     dispatch(listBlogDetails(match.params.id));
     dispatch(listNewestBlogs());
-  }, [dispatch, match]);
+  }, [dispatch, match, successblogComment]);
 
   const newDate = new Date(blog[0]?.createdAt).toUTCString().substring(6, 17);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(createBlogComment(match.params.id, { comment }));
+  };
 
   return (
     <>
@@ -178,6 +204,50 @@ const BlogPageScreen = ({ match }) => {
                   </div>
                 ))}
               </BlogNewest>
+              <div className="reviews">
+                <h2 className="review-title">
+                  Comments {blog[0]?.comments.length}
+                </h2>
+                {blog[0]?.comments.length === 0 && (
+                  <div
+                    style={{
+                      marginLeft: "3rem",
+                      marginBottom: "2rem",
+                    }}
+                  >
+                    <Message color={"#5f95e7b8"}>No Comments </Message>
+                  </div>
+                )}
+                {blog[0]?.comments.map((comment) => (
+                  <ul className="review-comment" key={comment._id}>
+                    <strong>{comment.name}</strong>
+                    <p>{comment.createdAt.substring(0, 10)}</p>
+                    <p>{comment.comment}</p>
+                  </ul>
+                ))}
+                <ul className="customer-review">
+                  <h2>Write a Comment</h2>
+                  {errorblogComment && (
+                    <Message color={"red"}>{errorblogComment} </Message>
+                  )}
+                  {userInfo ? (
+                    <form className="comment-form" onSubmit={submitHandler}>
+                      <label htmlFor="rating">Rating</label>
+                      <label htmlFor="comment">Comment</label>
+                      <textarea
+                        row="3"
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                      />
+                      <ButtonAddToCart2 type="submit">Submit</ButtonAddToCart2>
+                    </form>
+                  ) : (
+                    <Message>
+                      Please <Link to="/login">sign in</Link> to write a review
+                    </Message>
+                  )}
+                </ul>
+              </div>
             </BlogPageMain>
           </div>
           <FooterScreen />

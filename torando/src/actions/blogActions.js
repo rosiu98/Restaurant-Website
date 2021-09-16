@@ -1,5 +1,8 @@
 import axios from "axios";
 import {
+  BLOG_CREATE_COMMENT_FAIL,
+  BLOG_CREATE_COMMENT_REQUEST,
+  BLOG_CREATE_COMMENT_SUCCESS,
   BLOG_CREATE_FAIL,
   BLOG_CREATE_REQUEST,
   BLOG_CREATE_SUCCESS,
@@ -179,3 +182,37 @@ export const listNewestBlogs = () => async (dispatch) => {
     });
   }
 };
+
+export const createBlogComment =
+  (blogId, comment) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: BLOG_CREATE_COMMENT_REQUEST,
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+
+      await axios.post(`/api/blogs/${blogId}/comments`, comment, config);
+
+      dispatch({
+        type: BLOG_CREATE_COMMENT_SUCCESS,
+      });
+    } catch (error) {
+      dispatch({
+        type: BLOG_CREATE_COMMENT_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
