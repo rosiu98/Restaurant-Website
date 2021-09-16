@@ -5,15 +5,10 @@ import "../table.css";
 import Loading from "../components/Loading";
 import Navbar from "../components/Navbar";
 import { Message } from "../components/Message";
-import {
-  listProducts,
-  deleteProduct,
-  createProduct,
-} from "../actions/productActions";
-import { PRODUCT_CREATE_RESET } from "../constants/productConstants";
+import { BLOG_CREATE_RESET } from "../constants/blogConstants";
 import styled from "styled-components";
-
-const ButtonDelete = styled.button``;
+import { createBlog, deleteBlog, listBlogs } from "../actions/blogActions";
+import { ButtonDelete, EditLink } from "./UserListScreen";
 
 const ButtonCreateProduct = styled.button`
   background-color: #b3b3b3bf;
@@ -33,51 +28,47 @@ const BlogListScreen = ({ history, match }) => {
   const blogList = useSelector((state) => state.blogList);
   const { loading, error, blogs } = blogList;
 
-  const productDelete = useSelector((state) => state.productDelete);
+  const blogDelete = useSelector((state) => state.blogDelete);
   const {
     loading: loadingDelete,
     error: errorDelete,
     success: successDelete,
-  } = productDelete;
+  } = blogDelete;
 
-  const productCreate = useSelector((state) => state.productCreate);
+  const blogCreate = useSelector((state) => state.blogCreate);
   const {
     loading: loadingCreate,
     error: errorCreate,
     success: successCreate,
-    product: createdProduct,
-  } = productCreate;
+    blog: createdBlog,
+  } = blogCreate;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   useEffect(() => {
-    dispatch({ type: PRODUCT_CREATE_RESET });
+    dispatch({ type: BLOG_CREATE_RESET });
     if (!userInfo.isAdmin) {
       history.push("/login");
     }
     if (successCreate) {
-      history.push(`/admin/products/${createdProduct._id}/edit`);
+      history.push(`/admin/blogs/${createdBlog._id}/edit`);
     } else {
-      dispatch(listProducts());
+      dispatch(listBlogs());
     }
-  }, [
-    dispatch,
-    history,
-    userInfo,
-    successDelete,
-    successCreate,
-    createdProduct,
-  ]);
+    if (successDelete) {
+      dispatch(listBlogs());
+    }
+  }, [dispatch, history, userInfo, successCreate, successDelete, createdBlog]);
 
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure ")) {
-      dispatch(deleteProduct(id));
+      dispatch(deleteBlog(id));
     }
   };
 
   const createProductHandler = () => {
-    dispatch(createProduct());
+    dispatch(createBlog());
   };
 
   return (
@@ -96,17 +87,15 @@ const BlogListScreen = ({ history, match }) => {
           <>
             <div style={{ textAlign: "right" }}>
               <ButtonCreateProduct onClick={createProductHandler}>
-                <i className="fas fa-plus"></i> Create Product
+                <i className="fas fa-plus"></i> Create Blog
               </ButtonCreateProduct>
             </div>
             <table>
-              <caption>Products</caption>
+              <caption>Blogs</caption>
               <thead>
                 <tr>
                   <th scope="col">ID</th>
-                  <th scope="col">NAME</th>
-                  <th scope="col">PRICE</th>
-                  <th scope="col">CATEGORY</th>
+                  <th scope="col">TITLE</th>
                   <th scope="col">f()</th>
                 </tr>
               </thead>
@@ -114,13 +103,11 @@ const BlogListScreen = ({ history, match }) => {
                 {blogs.map((blog) => (
                   <tr key={blog._id}>
                     <td data-label="ID">{blog._id}</td>
-                    <td data-label="NAME">{blog.name}</td>
-                    <td data-label="PRICE">${blog.price}</td>
-                    <td data-label="CATEGORY">{blog.category}</td>
+                    <td data-label="TITLE">{blog.title} </td>
                     <td data-label="f()">
-                      <Link to={`/admin/blogs/${blog._id}/edit`}>
+                      <EditLink to={`/admin/blogs/${blog._id}/edit`}>
                         <i className="fas fa-edit"></i>
-                      </Link>
+                      </EditLink>
                       <ButtonDelete onClick={() => deleteHandler(blog._id)}>
                         <i className="fas fa-trash"></i>
                       </ButtonDelete>

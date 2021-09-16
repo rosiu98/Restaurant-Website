@@ -1343,8 +1343,30 @@ h2:hover {
   color: #8d8d8d;
   margin-bottom: 3rem;
   width: 90%;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .blog-buttons {
   margin-bottom: 1rem;
+}
+
+.editor {
+  max-width: 1170px;
+  margin: 0 auto;
+  margin-bottom: 5rem;
+}
+
+.editor button {
+  display: block;
+}
+
+.rdw-editor-main {
+  border: 1px solid black;
+}
+
+.rdw-editor-wrapper {
+  margin: 4rem 0;
 }

@@ -6,6 +6,7 @@ import Loading from "../components/Loading";
 import Navbar from "../components/Navbar";
 import { Message } from "../components/Message";
 import { listOrders } from "../actions/orderActions";
+import { EditLink } from "./UserListScreen";
 
 const OrdersListScreen = ({ history, match }) => {
   const dispatch = useDispatch();
@@ -77,7 +78,7 @@ const OrdersListScreen = ({ history, match }) => {
                       )}
                     </td>
                     <td data-label="LINK">
-                      <Link to={`/order/${order._id}`}>Details</Link>
+                      <EditLink to={`/order/${order._id}`}>Details</EditLink>
                     </td>
                   </tr>
                 ))}

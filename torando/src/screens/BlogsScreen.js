@@ -18,6 +18,7 @@ const BlogExample = () => {
     dispatch(listBlogs());
   }, [dispatch]);
 
+  console.log(blogs);
   return (
     <>
       <Navbar />
@@ -44,7 +45,11 @@ const BlogExample = () => {
                   </h2>
                 </div>
                 <div className="blog-description">
-                  <p>{blog.description}</p>
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: blog.description,
+                    }}
+                  ></p>
                 </div>
                 <div className="blog-buttons">
                   <Link to={`/blogs/${blog._id}`} className="button-brown">

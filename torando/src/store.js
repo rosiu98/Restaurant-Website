@@ -11,7 +11,13 @@ import {
   productTopRatedReducer,
 } from "./reducers/productReducers";
 
-import { blogListReducer, blogDetailsReducer } from "./reducers/blogReducers";
+import {
+  blogListReducer,
+  blogDetailsReducer,
+  blogCreateReducer,
+  blogDeleteReducer,
+  blogUpdateReducer,
+} from "./reducers/blogReducers";
 import { cartReducer } from "./reducers/cartReducers";
 import {
   userLoginReducer,
@@ -40,6 +46,9 @@ const reducer = combineReducers({
   productTopRated: productTopRatedReducer,
   blogList: blogListReducer,
   blogDetails: blogDetailsReducer,
+  blogCreate: blogCreateReducer,
+  blogDelete: blogDeleteReducer,
+  blogUpdate: blogUpdateReducer,
   cart: cartReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,

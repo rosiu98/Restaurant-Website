@@ -8,7 +8,25 @@ import { Message } from "../components/Message";
 import { listUsers, deleteUser } from "../actions/userActions";
 import styled from "styled-components";
 
-const ButtonDelete = styled.button``;
+export const ButtonDelete = styled.button`
+  color: var(--color-brown);
+  border: none;
+  cursor: pointer;
+  margin-left: 1rem;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+export const EditLink = styled(Link)`
+  color: #107ab0;
+
+  &:hover {
+    color: #107ab094;
+    transition: 0.2s all ease-in-out;
+  }
+`;
 
 const UserListScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -75,9 +93,9 @@ const UserListScreen = ({ history }) => {
                     )}
                   </td>
                   <td data-label="f()">
-                    <Link to={`/admin/user/${user._id}/edit`}>
+                    <EditLink to={`/admin/user/${user._id}/edit`}>
                       <i className="fas fa-edit"></i>
-                    </Link>
+                    </EditLink>
                     <ButtonDelete onClick={() => deleteHandler(user._id)}>
                       <i className="fas fa-trash"></i>
                     </ButtonDelete>

@@ -50,6 +50,13 @@ const BlogDetails = styled.div`
     color: #8d8d8d;
     width: 95%;
   }
+
+  img {
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    border-radius: 10px;
+  }
 `;
 
 const BlogPageScreen = ({ match }) => {
@@ -62,6 +69,8 @@ const BlogPageScreen = ({ match }) => {
     dispatch(listBlogDetails(match.params.id));
   }, [dispatch, match]);
 
+  const newDate = new Date(blog[0]?.createdAt).toUTCString().substring(6, 17);
+
   return (
     <>
       {error && <Message>{error}</Message>}
@@ -73,7 +82,7 @@ const BlogPageScreen = ({ match }) => {
           <PageHero
             name={`${blog[0]?.title.substring(0, 18)}...`}
             blogs
-            title={"/ Blog Details"}
+            title={" Blog Details"}
           />
           <div style={{ padding: "12rem 0", backgroundColor: "#faf7f2" }}>
             <BlogPageMain>
@@ -81,20 +90,18 @@ const BlogPageScreen = ({ match }) => {
                 <img src={blog[0]?.image} alt={blog[0]?.title} />
                 <div className="blog-date">
                   <i className="far fa-calendar-alt"></i>
-                  <p>13.09.2021</p>
+                  <p>{newDate}</p>
                   <hr />
                   <p>{blog[0]?.user.name}</p>
                 </div>
               </BlogPageHero>
               <BlogDetails>
                 <h2>{blog[0]?.title}</h2>
-                <p>
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Veniam nihil rerum, qui ratione fugit, at ut non laborum
-                  suscipit eos distinctio quae magnam illo laboriosam quidem et
-                  iusto libero nulla.
-                </p>
-                <img src={blog[0]?.image} alt={blog[0]?.title} />
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: blog[0]?.description,
+                  }}
+                ></p>
               </BlogDetails>
             </BlogPageMain>
           </div>

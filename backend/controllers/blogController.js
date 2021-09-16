@@ -6,7 +6,7 @@ import User from "../models/userModel.js";
 // @ GET /api/blogs
 // @ Public
 const getAllBlogs = asyncHandler(async (req, res) => {
-  const blogs = await Blog.find({});
+  const blogs = await Blog.find({}).populate("user");
 
   res.json(blogs);
 });
@@ -32,11 +32,11 @@ const deleteBlog = asyncHandler(async (req, res) => {
   const blog = await Blog.findById(req.params.id);
 
   if (blog) {
-    await product.remove();
-    res.json({ message: "Product removed" });
+    await blog.remove();
+    res.json({ message: "Blog removed" });
   } else {
     res.status(404);
-    throw new Error("Product not found");
+    throw new Error("Blog not found");
   }
 });
 

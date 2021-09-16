@@ -12,8 +12,7 @@ import {
 } from "../actions/productActions";
 import { PRODUCT_CREATE_RESET } from "../constants/productConstants";
 import styled from "styled-components";
-
-const ButtonDelete = styled.button``;
+import { ButtonDelete, EditLink } from "./UserListScreen";
 
 const ButtonCreateProduct = styled.button`
   background-color: #b3b3b3bf;
@@ -59,6 +58,10 @@ const ProductListScreen = ({ history, match }) => {
     if (successCreate) {
       history.push(`/admin/products/${createdProduct._id}/edit`);
     } else {
+      dispatch(listProducts());
+    }
+
+    if (successDelete) {
       dispatch(listProducts());
     }
   }, [
@@ -118,9 +121,9 @@ const ProductListScreen = ({ history, match }) => {
                     <td data-label="PRICE">${product.price}</td>
                     <td data-label="CATEGORY">{product.category}</td>
                     <td data-label="f()">
-                      <Link to={`/admin/products/${product._id}/edit`}>
+                      <EditLink to={`/admin/products/${product._id}/edit`}>
                         <i className="fas fa-edit"></i>
-                      </Link>
+                      </EditLink>
                       <ButtonDelete onClick={() => deleteHandler(product._id)}>
                         <i className="fas fa-trash"></i>
                       </ButtonDelete>
