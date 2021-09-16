@@ -2,6 +2,7 @@ import express from "express";
 const router = express.Router();
 import {
   createBlog,
+  createCommentBlog,
   deleteBlog,
   getAllBlogs,
   getBlogById,
@@ -11,6 +12,7 @@ import {
 import { admin, protect } from "../middleware/authMiddleware.js";
 
 router.route("/").get(getAllBlogs).post(protect, admin, createBlog);
+router.route("/:id/comments").post(protect, createCommentBlog);
 router.get("/top", newestBlogs);
 router
   .route("/:id")

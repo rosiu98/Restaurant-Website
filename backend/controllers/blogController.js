@@ -77,10 +77,47 @@ const updateBlog = asyncHandler(async (req, res) => {
   }
 });
 
+// @desc Newest Blogs
+// @route GET /api/blogs
+// @access Public
 const newestBlogs = asyncHandler(async (req, res) => {
   const newest = await Blog.find({}).sort({ createdAt: -1 }).limit(3);
 
   res.json(newest);
+});
+
+// @desc Create Review for Blog
+// @route POST /api/blogs/:id/comments
+// @access Private
+const createCommentBlog = asyncHandler(async (req, res) => {
+  const { comment } = req.body;
+
+  const blog = await Blog.findById(req.params.id);
+
+  if (blog) {
+    const blogCommentExist = blog.comments.find(
+      (r) => r.user.toString() === req.body._id.toString()
+    );
+
+    if (blogCommentExist) {
+      res.status(400);
+      throw new Error("Product already review");
+    }
+
+    const review = {
+      name: req.user.name,
+      comment,
+      user: req.user._id,
+    };
+
+    blog.comments.push(review);
+
+    await blog.save();
+    res.status(201).json({ message: "Review added" });
+  } else {
+    res.status(404);
+    throw new Error("Product not found");
+  }
 });
 
 export {
@@ -90,4 +127,5 @@ export {
   createBlog,
   updateBlog,
   newestBlogs,
+  createCommentBlog,
 };
