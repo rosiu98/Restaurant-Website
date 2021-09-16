@@ -12,6 +12,9 @@ import {
   BLOG_LIST_FAIL,
   BLOG_LIST_REQUEST,
   BLOG_LIST_SUCCESS,
+  BLOG_NEWEST_FAIL,
+  BLOG_NEWEST_REQUEST,
+  BLOG_NEWEST_SUCCESS,
   BLOG_UPDATE_FAIL,
   BLOG_UPDATE_REQUEST,
   BLOG_UPDATE_SUCCESS,
@@ -148,6 +151,27 @@ export const updateBlog = (product) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: BLOG_UPDATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const listNewestBlogs = () => async (dispatch) => {
+  try {
+    dispatch({ type: BLOG_NEWEST_REQUEST });
+
+    const { data } = await axios.get("/api/blogs/top");
+
+    dispatch({
+      type: BLOG_NEWEST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: BLOG_NEWEST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

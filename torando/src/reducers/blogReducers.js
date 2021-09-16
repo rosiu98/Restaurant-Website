@@ -12,6 +12,9 @@ import {
   BLOG_LIST_FAIL,
   BLOG_LIST_REQUEST,
   BLOG_LIST_SUCCESS,
+  BLOG_NEWEST_FAIL,
+  BLOG_NEWEST_REQUEST,
+  BLOG_NEWEST_SUCCESS,
   BLOG_UPDATE_FAIL,
   BLOG_UPDATE_REQUEST,
   BLOG_UPDATE_RESET,
@@ -66,6 +69,19 @@ export const blogDeleteReducer = (state = {}, action) => {
     case BLOG_DELETE_SUCCESS:
       return { loading: false, success: true };
     case BLOG_DELETE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const blogNewestReducer = (state = { blogNew: [] }, action) => {
+  switch (action.type) {
+    case BLOG_NEWEST_REQUEST:
+      return { loading: true, blogNew: [] };
+    case BLOG_NEWEST_SUCCESS:
+      return { loading: false, blogNew: action.payload };
+    case BLOG_NEWEST_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

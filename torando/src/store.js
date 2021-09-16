@@ -17,6 +17,7 @@ import {
   blogCreateReducer,
   blogDeleteReducer,
   blogUpdateReducer,
+  blogNewestReducer,
 } from "./reducers/blogReducers";
 import { cartReducer } from "./reducers/cartReducers";
 import {
@@ -46,6 +47,7 @@ const reducer = combineReducers({
   productTopRated: productTopRatedReducer,
   blogList: blogListReducer,
   blogDetails: blogDetailsReducer,
+  blogNewest: blogNewestReducer,
   blogCreate: blogCreateReducer,
   blogDelete: blogDeleteReducer,
   blogUpdate: blogUpdateReducer,
