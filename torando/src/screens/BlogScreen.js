@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import Heading from "../components/Heading";
 import arrow from "../img/arrow-brown.svg";
-import { blogs } from "../blogs.js";
 import { useDispatch, useSelector } from "react-redux";
 import { listNewestBlogs } from "../actions/blogActions";
 import Loading from "../components/Loading";

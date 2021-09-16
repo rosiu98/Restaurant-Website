@@ -1377,3 +1377,66 @@ h2:hover {
 .rdw-editor-wrapper {
   margin: 4rem 0;
 }
+
+.blog-recent {
+  padding: 3.5rem 3rem;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.blog-recent h3 {
+  font-size: 1.8rem;
+  margin-bottom: 2.4rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-family: "Roboto", sans-serif;
+}
+
+.blog-recent-post {
+  display: flex;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.blog-recent-post img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-right: 2rem;
+}
+
+.blog-recent-post:last-of-type {
+  margin-bottom: 0;
+}
+
+.blog-recent-description {
+  display: flex;
+  flex-direction: column;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  gap: 1rem;
+}
+
+.blog-recent-description h4 {
+  font-size: 1.4rem;
+  line-height: 25px;
+  font-family: "Roboto", sans-serif;
+  color: var(--color-dark);
+}
+
+.blog-recent-description i {
+  font-size: 1.5rem;
+}
+
+.blog-recent-description i::before {
+  margin-right: 0.7rem;
+}
+.blog-recent-description p {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.5rem;
+  color: #706c61;
+}

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { listBlogs } from "../actions/blogActions";
+import { listBlogs, listNewestBlogs } from "../actions/blogActions";
 import Loading from "../components/Loading";
 import { Message } from "../components/Message";
 import Navbar from "../components/Navbar";
@@ -14,11 +14,14 @@ const BlogExample = () => {
   const blogList = useSelector((state) => state.blogList);
   const { loading, error, blogs } = blogList;
 
+  const blogNewest = useSelector((state) => state.blogNewest);
+  const { blogNew } = blogNewest;
+
   useEffect(() => {
     dispatch(listBlogs());
+    dispatch(listNewestBlogs());
   }, [dispatch]);
 
-  console.log(blogs);
   return (
     <>
       <Navbar />
@@ -60,7 +63,27 @@ const BlogExample = () => {
             ))}
           </div>
           <div className="blog-sidebar">
-            <h1>I'm Sidebar</h1>
+            <div className="blog-recent">
+              <h3>RECENT POSTS</h3>
+              {blogNew.map((blog) => {
+                const mapDate = new Date(blog.createdAt)
+                  .toUTCString()
+                  .substring(6, 17);
+
+                return (
+                  <div className="blog-recent-post" key={blog._id}>
+                    <img src={blog.image} alt={blog.name} />
+                    <div className="blog-recent-description">
+                      <h4>{blog.title.substring(0, 42)}</h4>
+
+                      <p>
+                        <i className="far fa-calendar-alt">{mapDate}</i>
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

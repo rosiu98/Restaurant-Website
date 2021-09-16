@@ -108,11 +108,19 @@ const GridSidebar = styled.div`
   }
 `;
 
-const SearchBar = styled.div`
+export const SearchBar = styled.div`
   background-color: white;
   padding: 3.5rem 2rem;
   border-radius: 15px;
   margin-bottom: 3rem;
+
+  & h2 {
+    font-size: 1.8rem;
+    margin-bottom: 2.4rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-family: "Roboto", sans-serif;
+  }
 
   & input {
     width: 100%;
