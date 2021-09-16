@@ -77,4 +77,17 @@ const updateBlog = asyncHandler(async (req, res) => {
   }
 });
 
-export { getAllBlogs, getBlogById, deleteBlog, createBlog, updateBlog };
+const newestBlogs = asyncHandler(async (req, res) => {
+  const newest = await Blog.find({}).sort({ createdAt: -1 }).limit(3);
+
+  res.json(newest);
+});
+
+export {
+  getAllBlogs,
+  getBlogById,
+  deleteBlog,
+  createBlog,
+  updateBlog,
+  newestBlogs,
+};

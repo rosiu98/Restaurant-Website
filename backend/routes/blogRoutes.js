@@ -5,11 +5,13 @@ import {
   deleteBlog,
   getAllBlogs,
   getBlogById,
+  newestBlogs,
   updateBlog,
 } from "../controllers/blogController.js";
 import { admin, protect } from "../middleware/authMiddleware.js";
 
 router.route("/").get(getAllBlogs).post(protect, admin, createBlog);
+router.get("/top", newestBlogs);
 router
   .route("/:id")
   .get(getBlogById)
