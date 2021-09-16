@@ -32,6 +32,7 @@ function App() {
       <Route path="/profile" component={ProfileScreen} />
       <Route path="/register" component={RegisterScreen} />
       <Route path="/login" component={LoginScreen} />
+      <Route path="/menu/search/:keyword" component={MenuScreen} />
       <Route path="/menu" component={MenuScreen} exact />
       <Route path="/menu/:id" component={ProductScreen} />
       <Route path="/cart/:id?" component={CartScreen} />

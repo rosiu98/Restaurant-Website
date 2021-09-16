@@ -185,7 +185,7 @@ const ProductScreen = ({ match, history }) => {
   return (
     <div>
       <Navbar />
-      <PageHero title={product.name || ""} product name={"PRODUCT DETAILS"} />
+      <PageHero title={product?.name || ""} product name={"PRODUCT DETAILS"} />
       {loading ? (
         <Loading />
       ) : error ? (

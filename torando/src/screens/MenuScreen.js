@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Route } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -8,6 +9,7 @@ import { Message } from "../components/Message";
 import Navbar from "../components/Navbar";
 import PageHero from "../components/PageHero";
 import Rating from "../components/Rating";
+import SearchBox from "../components/SearchBox";
 import FooterScreen from "./FooterScreen";
 
 const GridMenu = styled.div`
@@ -121,7 +123,7 @@ const SearchBar = styled.div`
     outline: none;
   }
 
-  & div {
+  & form {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -131,10 +133,23 @@ const SearchBar = styled.div`
     border: 2px solid #f7f7f7;
   }
 
+  & button {
+    margin-right: 2rem;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+
+    &:hover i {
+      transform: scale(1.1);
+      transition: 0.2s all ease-in-out;
+      color: var(--color-black);
+    }
+  }
+
   & i {
     color: #949494;
     font-size: 1.4rem;
-    margin-right: 2rem;
   }
 `;
 
@@ -175,7 +190,9 @@ const TopProducts = styled.div`
   }
 `;
 
-const MenuScreen = () => {
+const MenuScreen = ({ match }) => {
+  const keyword = match.params.keyword;
+
   const dispatch = useDispatch();
 
   const productList = useSelector((state) => state.productList);
@@ -196,13 +213,14 @@ const MenuScreen = () => {
 
   const filterItems = (category) => {
     const newItems = products.filter((item) => item.category === category);
+
     setMenuItems(newItems);
   };
 
   useEffect(() => {
-    dispatch(listProducts());
+    dispatch(listProducts(keyword));
     dispatch(listTopProducts());
-  }, [dispatch]);
+  }, [dispatch, keyword]);
 
   return (
     <>
@@ -251,25 +269,44 @@ const MenuScreen = () => {
             <GridSidebar>
               <SearchBar>
                 <h3>SEARCH HERE</h3>
-                <div>
-                  <input type="text" placeholder="Search..." />
-                  <i className="fas fa-search"></i>
-                </div>
+                <Route
+                  render={({ history }) => <SearchBox history={history} />}
+                />
               </SearchBar>
               <Categories>
                 <h3>CATEGORIES</h3>
                 <div>
                   {categories.map((c, index) => {
-                    return (
-                      <button
-                        key={index}
-                        type="button"
-                        name="category"
-                        onClick={() => filterItems(c)}
-                      >
-                        {c}
-                      </button>
-                    );
+                    console.log(c.length);
+
+                    if (c === "ALL") {
+                      return (
+                        <button
+                          key={index}
+                          type="button"
+                          name="category"
+                          onClick={() => filterItems(c)}
+                        >
+                          <Link
+                            to="/menu"
+                            style={{ color: "inherit", width: "100%" }}
+                          >
+                            ALL
+                          </Link>
+                        </button>
+                      );
+                    } else {
+                      return (
+                        <button
+                          key={index}
+                          type="button"
+                          name="category"
+                          onClick={() => filterItems(c)}
+                        >
+                          {c}
+                        </button>
+                      );
+                    }
                   })}
                 </div>
               </Categories>
