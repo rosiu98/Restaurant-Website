@@ -1410,6 +1410,11 @@ h2:hover {
   margin-bottom: 0;
 }
 
+.blog-recent-post:hover h4 {
+  color: var(--color-yellow);
+  transition: 0.3s all ease-in-out;
+}
+
 .blog-recent-description {
   display: flex;
   flex-direction: column;
@@ -1421,7 +1426,7 @@ h2:hover {
 
 .blog-recent-description h4 {
   font-size: 1.4rem;
-  line-height: 25px;
+  line-height: 20px;
   font-family: "Roboto", sans-serif;
   color: var(--color-dark);
 }

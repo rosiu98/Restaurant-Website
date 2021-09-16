@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { listBlogDetails } from "../actions/blogActions";
+import { listBlogDetails, listNewestBlogs } from "../actions/blogActions";
 import Loading from "../components/Loading";
 import { Message } from "../components/Message";
 // import blog from "../blog";
@@ -59,14 +60,71 @@ const BlogDetails = styled.div`
   }
 `;
 
+const BlogNewest = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 2rem;
+  margin: 3rem 0;
+  padding: 3rem 0;
+  border-bottom: 1px solid #f4f0e9;
+  border-top: 1px solid #f4f0e9;
+
+  @media (max-width: 1000px) {
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+
+    & img {
+      object-fit: cover;
+    }
+  }
+
+  & img {
+    width: 100%;
+    height: 360px;
+    border-radius: 15px;
+    filter: brightness(0.9);
+  }
+
+  h2 {
+    font-size: 2.4rem;
+  }
+`;
+
+const BlogNewestDesc = styled(Link)`
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  & p {
+    font-size: 1.7rem;
+    font-weight: normal;
+    line-height: 28px;
+    color: #8d8d8d;
+    width: 95%;
+  }
+
+  &:hover {
+    & h2 {
+      color: var(--color-yellow);
+      transition: 0.2s all ease-in-out;
+    }
+  }
+`;
+
 const BlogPageScreen = ({ match }) => {
   const dispatch = useDispatch();
 
   const blogDetails = useSelector((state) => state.blogDetails);
   const { loading, error, blog } = blogDetails;
 
+  const blogNewest = useSelector((state) => state.blogNewest);
+  const { blogNew } = blogNewest;
+
   useEffect(() => {
     dispatch(listBlogDetails(match.params.id));
+    dispatch(listNewestBlogs());
   }, [dispatch, match]);
 
   const newDate = new Date(blog[0]?.createdAt).toUTCString().substring(6, 17);
@@ -103,6 +161,23 @@ const BlogPageScreen = ({ match }) => {
                   }}
                 ></p>
               </BlogDetails>
+              <BlogNewest>
+                {blogNew.slice(0, 2).map((blog) => (
+                  <div key={blog._id}>
+                    <div>
+                      <img src={blog.image} alt={blog.title} />
+                    </div>
+                    <BlogNewestDesc to={`/blogs/${blog._id}`}>
+                      <h2>{blog.title}</h2>
+                      <p
+                        dangerouslySetInnerHTML={{
+                          __html: blog.description,
+                        }}
+                      ></p>
+                    </BlogNewestDesc>
+                  </div>
+                ))}
+              </BlogNewest>
             </BlogPageMain>
           </div>
           <FooterScreen />

@@ -71,7 +71,11 @@ const BlogExample = () => {
                   .substring(6, 17);
 
                 return (
-                  <div className="blog-recent-post" key={blog._id}>
+                  <Link
+                    to={`/blogs/${blog._id}`}
+                    className="blog-recent-post"
+                    key={blog._id}
+                  >
                     <img src={blog.image} alt={blog.name} />
                     <div className="blog-recent-description">
                       <h4>{blog.title.substring(0, 42)}</h4>
@@ -80,7 +84,7 @@ const BlogExample = () => {
                         <i className="far fa-calendar-alt">{mapDate}</i>
                       </p>
                     </div>
-                  </div>
+                  </Link>
                 );
               })}
             </div>
