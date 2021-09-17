@@ -5,9 +5,7 @@ import PageHero from "../components/PageHero";
 import { ButtonAddToCart2 } from "./CartScreen";
 import FooterScreen from "./FooterScreen";
 import DatePicker from "react-datepicker";
-// import "date-fns";
 import { KeyboardTimePicker } from "@material-ui/pickers";
-import { alpha } from "@material-ui/core/styles";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -62,6 +60,24 @@ const ReservationInput = styled.div`
     outline: none;
   }
 
+  & textarea,
+  label {
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 1.6rem;
+    font-family: inherit;
+    color: var(--color-dark);
+  }
+
+  & p {
+    font-size: 1.6rem;
+    font-family: inherit;
+    color: #9d9a9a;
+    margin-bottom: 2rem;
+  }
+
   & select {
     -moz-appearance: none; /* Firefox */
     -webkit-appearance: none; /* Safari and Chrome */
@@ -82,6 +98,10 @@ const ReservationInput = styled.div`
     right: 2.1rem;
     z-index: 0;
   }
+
+  &:last-of-type {
+    grid-column: 1 / span 2;
+  }
 `;
 
 const ReservationScreen = () => {
@@ -91,6 +111,7 @@ const ReservationScreen = () => {
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState(new Date());
   const [email, setEmail] = useState("");
+  const [comment, setComment] = useState("");
 
   const handleTimeChange = (date) => {
     setTime(date);
@@ -174,6 +195,19 @@ const ReservationScreen = () => {
                 placeholder="Enter Your Email"
               />
               <i className="fas fa-envelope"></i>
+            </ReservationInput>
+            <ReservationInput>
+              <label htmlFor="comments">
+                <p>Message</p>
+                <textarea
+                  name="comments"
+                  id="comments"
+                  cols="30"
+                  rows="10"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                ></textarea>
+              </label>
             </ReservationInput>
             <ButtonAddToCart2 type="submit">Reserve Table</ButtonAddToCart2>
           </ReservationForm>
