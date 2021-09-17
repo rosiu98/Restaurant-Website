@@ -16,36 +16,43 @@ import ProductListScreen from "./screens/ProductListScreen";
 import ProductScreen from "./screens/ProductScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 import RegisterScreen from "./screens/RegisterScreen";
+import ReservationScreen from "./screens/ReservationScreen";
 import ShippingScreen from "./screens/ShippingScreen";
 import UserEditScreen from "./screens/UserEditScreen";
 import UserListScreen from "./screens/UserListScreen";
+import "date-fns";
+import DateFnsUtils from "@date-io/date-fns";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 
 function App() {
   return (
-    <Router>
-      <Route path="/blogs/:id" component={BlogPageScreen} />
-      <Route path="/blogs" component={BlogsScreen} exact />
-      <Route path="/order/:id" component={OrderScreen} />
-      <Route path="/placeorder" component={PlaceOrderScreen} />
-      <Route path="/payment" component={PaymentScreen} />
-      <Route path="/shipping" component={ShippingScreen} />
-      <Route path="/profile" component={ProfileScreen} />
-      <Route path="/register" component={RegisterScreen} />
-      <Route path="/login" component={LoginScreen} />
-      <Route path="/menu/search/:keyword" component={MenuScreen} />
-      <Route path="/menu" component={MenuScreen} exact />
-      <Route path="/menu/:id" component={ProductScreen} />
-      <Route path="/cart/:id?" component={CartScreen} />
-      <Route path="/admin/userlist" component={UserListScreen} />
-      <Route path="/admin/orderlist" component={OrdersListScreen} />
-      <Route path="/admin/user/:id/edit" component={UserEditScreen} />
-      <Route path="/admin/productlist" component={ProductListScreen} exact />
-      <Route path="/admin/products/:id/edit" component={ProductEditScreen} />
-      <Route path="/admin/blogs" component={BlogListScreen} exact />
-      <Route path="/admin/blogs/:id/edit" component={BlogEditScreen} exact />
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <Router>
+        <Route path="/reservation" component={ReservationScreen} exact />
+        <Route path="/blogs/:id" component={BlogPageScreen} />
+        <Route path="/blogs" component={BlogsScreen} exact />
+        <Route path="/order/:id" component={OrderScreen} />
+        <Route path="/placeorder" component={PlaceOrderScreen} />
+        <Route path="/payment" component={PaymentScreen} />
+        <Route path="/shipping" component={ShippingScreen} />
+        <Route path="/profile" component={ProfileScreen} />
+        <Route path="/register" component={RegisterScreen} />
+        <Route path="/login" component={LoginScreen} />
+        <Route path="/menu/search/:keyword" component={MenuScreen} />
+        <Route path="/menu" component={MenuScreen} exact />
+        <Route path="/menu/:id" component={ProductScreen} />
+        <Route path="/cart/:id?" component={CartScreen} />
+        <Route path="/admin/userlist" component={UserListScreen} />
+        <Route path="/admin/orderlist" component={OrdersListScreen} />
+        <Route path="/admin/user/:id/edit" component={UserEditScreen} />
+        <Route path="/admin/productlist" component={ProductListScreen} exact />
+        <Route path="/admin/products/:id/edit" component={ProductEditScreen} />
+        <Route path="/admin/blogs" component={BlogListScreen} exact />
+        <Route path="/admin/blogs/:id/edit" component={BlogEditScreen} exact />
 
-      <Route path="/" component={HomeScreen} exact />
-    </Router>
+        <Route path="/" component={HomeScreen} exact />
+      </Router>
+    </MuiPickersUtilsProvider>
   );
 }
 

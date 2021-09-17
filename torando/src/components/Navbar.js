@@ -42,6 +42,9 @@ const Navbar = () => {
         <NavLink activeClassName="active" to="/blogs">
           BLOG
         </NavLink>
+        <NavLink activeClassName="active" to="/reservation">
+          BOOK A TABLE
+        </NavLink>
       </div>
 
       <div className="buttons">

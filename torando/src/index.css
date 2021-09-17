@@ -29,6 +29,8 @@ nav {
   display: flex;
   align-items: center;
   padding: 4rem 6rem 2rem 6rem;
+  position: relative;
+  z-index: 999;
 }
 
 .active {
@@ -1444,4 +1446,16 @@ h2:hover {
   font-style: normal;
   font-size: 1.5rem;
   color: #706c61;
+}
+
+.react-datepicker__day--selected {
+  background-color: var(--color-yellow) !important;
+}
+
+.MuiPickersToolbar-toolbar {
+  background-color: var(--color-yellow) !important;
+}
+
+.MuiButton-textPrimary {
+  color: var(--color-yellow) !important;
 }
