@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import PageHero from "../components/PageHero";
@@ -8,6 +8,10 @@ import DatePicker from "react-datepicker";
 import { KeyboardTimePicker } from "@material-ui/pickers";
 
 import "react-datepicker/dist/react-datepicker.css";
+import { useDispatch, useSelector } from "react-redux";
+import { createReservation } from "../actions/reservationActions";
+import Loading from "../components/Loading";
+import { Message } from "../components/Message";
 
 const ReservationSection = styled.div`
   width: 1170px;
@@ -48,16 +52,19 @@ const ReservationInput = styled.div`
   position: relative;
 
   & input,
-  select,
-  input::placeholder {
+  select {
     height: 20px;
     font-size: 1.6rem;
     font-family: inherit;
-    color: #9d9a9a;
+    color: var(--color-dark);
     width: 100%;
     background-color: transparent;
     border: none;
     outline: none;
+  }
+
+  & input::placeholder {
+    color: #9d9a9a;
   }
 
   & textarea,
@@ -105,16 +112,46 @@ const ReservationInput = styled.div`
 `;
 
 const ReservationScreen = () => {
+  const dispatch = useDispatch();
+
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [person, setPerson] = useState("");
+  const [persons, setPersons] = useState("1");
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState(new Date());
   const [email, setEmail] = useState("");
   const [comment, setComment] = useState("");
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const reservationCreate = useSelector((state) => state.reservationCreate);
+  const { loading, error } = reservationCreate;
+
+  useEffect(() => {
+    if (userInfo) {
+      setName(userInfo.name);
+      setEmail(userInfo.email);
+    }
+  }, [userInfo]);
+
   const handleTimeChange = (date) => {
     setTime(date);
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(
+      createReservation({
+        name,
+        phone,
+        persons,
+        date,
+        time,
+        email,
+        comment,
+      })
+    );
   };
 
   return (
@@ -127,13 +164,16 @@ const ReservationScreen = () => {
           padding: "12rem 0",
         }}
       >
+        {loading && Loading}
+        {error && <Message>{error}</Message>}
         <ReservationSection>
           <h2>RESERVE YOUR TABLE</h2>
-          <ReservationForm>
+          <ReservationForm onSubmit={submitHandler}>
             <ReservationInput>
               <input
                 type="text"
                 value={name}
+                required
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Enter Your Name"
               />
@@ -141,7 +181,9 @@ const ReservationScreen = () => {
             </ReservationInput>
             <ReservationInput>
               <input
-                type="text"
+                type="tel"
+                pattern="[0-9]{9}"
+                required
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="Enter Your Number"
@@ -152,8 +194,8 @@ const ReservationScreen = () => {
               <select
                 name="person"
                 id="person"
-                value={person}
-                onChange={(e) => setPerson(e.target.value)}
+                value={persons}
+                onChange={(e) => setPersons(e.target.value)}
               >
                 <option value="1">1 - Person</option>
                 <option value="2">2 - Persons</option>
@@ -168,6 +210,7 @@ const ReservationScreen = () => {
                 closeOnScroll={true}
                 // popperPlacement="top-start"
                 popperClassName="popperclass"
+                required
                 selected={date}
                 onChange={(date) => setDate(date)}
               />
@@ -176,8 +219,10 @@ const ReservationScreen = () => {
             <ReservationInput>
               <KeyboardTimePicker
                 // margin="normal"
-                emptyLabel="Time"
+                // emptyLabel="Time"
+                placeholder="Time"
                 // label="Time Picker"
+                required
                 value={time}
                 onChange={handleTimeChange}
                 KeyboardButtonProps={{
@@ -191,6 +236,7 @@ const ReservationScreen = () => {
               <input
                 type="text"
                 value={email}
+                required
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter Your Email"
               />
