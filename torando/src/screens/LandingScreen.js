@@ -8,6 +8,7 @@ import leafs from "../img/leafs.png";
 import kolo from "../img/kolo.png";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { motion } from "framer-motion";
 
 const LandingScreen = () => {
   const cart = useSelector((state) => state.cart);
@@ -56,10 +57,20 @@ const LandingScreen = () => {
         </div>
       </div>
 
-      <div className="circle">
+      <motion.div
+        className="circle"
+        initial={{ x: "30%", y: "-50%", opacity: 0 }}
+        animate={{ x: "-25%", y: "-50%", opacity: 1 }}
+        transition={{ delay: 0.5, duration: 1.5, type: "spring" }}
+      >
         <img src={circle} alt="circle" />
-      </div>
-      <div className="photo">
+      </motion.div>
+      <motion.div
+        className="photo"
+        initial={{ x: "100vh" }}
+        animate={{ x: 0 }}
+        transition={{ duration: 1 }}
+      >
         <div className="leafs">
           <img src={leafs} alt="liscie" />
         </div>
@@ -72,7 +83,7 @@ const LandingScreen = () => {
         <div className="tortilla">
           <img src={tortilla} alt="tortilla" />
         </div>
-      </div>
+      </motion.div>
     </main>
   );
 };

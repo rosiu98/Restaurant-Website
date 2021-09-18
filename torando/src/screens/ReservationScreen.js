@@ -12,6 +12,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { createReservation } from "../actions/reservationActions";
 import Loading from "../components/Loading";
 import { Message } from "../components/Message";
+import Popup from "../components/Popup";
+
+import popupImage from "../img/PopupAdded.svg";
 
 const ReservationSection = styled.div`
   width: 1170px;
@@ -114,6 +117,8 @@ const ReservationInput = styled.div`
 const ReservationScreen = () => {
   const dispatch = useDispatch();
 
+  const [buttonPopup, setButtonPopup] = useState(false);
+
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [persons, setPersons] = useState("1");
@@ -126,7 +131,7 @@ const ReservationScreen = () => {
   const { userInfo } = userLogin;
 
   const reservationCreate = useSelector((state) => state.reservationCreate);
-  const { loading, error } = reservationCreate;
+  const { loading, error, reservation } = reservationCreate;
 
   useEffect(() => {
     if (userInfo) {
@@ -152,10 +157,47 @@ const ReservationScreen = () => {
         comment,
       })
     );
+
+    setName("");
+    setPhone("");
+    setPersons("1");
+    setDate(new Date());
+    setTime(new Date());
+    setEmail("");
+    setComment("");
+
+    setButtonPopup(true);
   };
 
   return (
     <>
+      <Popup trigger={buttonPopup} setTrigger={setButtonPopup}>
+        <img src={popupImage} alt="Confirm" />
+        <h1>RESERVATION ADDED!</h1>
+
+        <div className="popup-info">
+          <div>
+            <h4>Name:</h4>
+            <p>{reservation?.name}</p>
+          </div>
+          <div>
+            <h4>Phone:</h4>
+            <p>{reservation?.phone}</p>
+          </div>
+          <div>
+            <h4>Persons:</h4>
+            <p>{reservation?.persons}</p>
+          </div>
+          <div>
+            <h4>Date:</h4>
+            <p>{reservation?.date.substring(0, 10)} </p>
+          </div>
+          <div>
+            <h4>Time:</h4>
+            <p>{reservation?.time.split("T")[1].substring(0, 5)}</p>
+          </div>
+        </div>
+      </Popup>
       <Navbar />
       <PageHero name={"RESERVATION"} title={"/ Reservation"} />
       <div
@@ -201,7 +243,7 @@ const ReservationScreen = () => {
                 <option value="2">2 - Persons</option>
                 <option value="3">3 - Persons</option>
                 <option value="4">4 - Persons</option>
-                <option value="5">5+ - Persons</option>
+                <option value="5+">5+ - Persons</option>
               </select>
               <i className="fas fa-chevron-down"></i>
             </ReservationInput>
