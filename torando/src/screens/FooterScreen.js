@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import image from "../img/time.svg";
-import { blogs } from "../blogs.js";
 import logoColor from "../img/logo-color.svg";
 import facebook from "../img/facebook-icon.svg";
 import youtube from "../img/youtube.svg";
