@@ -8,6 +8,10 @@ const PageWrapper = styled.div`
   background-image: url(${backgorund});
   padding: 15.5rem 0;
   position: relative;
+
+  @media (max-width: 1140px) {
+    padding: 15.5rem 3rem;
+  }
 `;
 
 const PageSection = styled.section`

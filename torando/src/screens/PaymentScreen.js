@@ -32,6 +32,10 @@ const PaymentScreen = ({ history }) => {
     flex-direction: column;
     margin-bottom: 13rem;
 
+    @media (max-width: 600px) {
+      width: 80%;
+    }
+
     & h1 {
       font-size: 3.2rem;
       color: #1e1d23;

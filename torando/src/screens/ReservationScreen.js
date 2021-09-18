@@ -23,6 +23,11 @@ const ReservationSection = styled.div`
   background-color: white;
   border-radius: 15px;
 
+  @media (max-width: 1180px) {
+    width: 100%;
+    width: auto;
+  }
+
   & h2 {
     margin: 0;
     line-height: 1;
@@ -40,6 +45,10 @@ const ReservationForm = styled.form`
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
 
+  @media (max-width: 1170px) {
+    grid-template-columns: 1fr;
+  }
+
   & button {
     grid-column: 1 / span 2;
   }
@@ -53,6 +62,10 @@ const ReservationInput = styled.div`
   background-color: #fbfaf7;
   justify-content: space-between;
   position: relative;
+
+  @media (max-width: 1170px) {
+    grid-column: 1 / span 2;
+  }
 
   & input,
   select {
@@ -200,12 +213,7 @@ const ReservationScreen = () => {
       </Popup>
       <Navbar />
       <PageHero name={"RESERVATION"} title={"/ Reservation"} />
-      <div
-        style={{
-          backgroundColor: "#faf7f2",
-          padding: "12rem 0",
-        }}
-      >
+      <div className="reservation-section">
         {loading && Loading}
         {error && <Message>{error}</Message>}
         <ReservationSection>

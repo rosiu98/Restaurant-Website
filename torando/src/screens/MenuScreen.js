@@ -39,6 +39,15 @@ const GridItems = styled.div`
   grid-area: items;
   gap: 3rem;
   align-items: center;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(auto-fit, 25rem);
+  }
+
+  @media (max-width: 1000px) {
+    grid-template-columns: repeat(auto-fit, 25rem);
+    margin-bottom: 12rem;
+  }
 `;
 
 const GridItem = styled.div`
@@ -67,6 +76,10 @@ export const GridImage = styled.img`
   height: 170px;
   object-fit: scale-down;
   margin-bottom: 2rem;
+
+  @media (max-width: 1200px) {
+    width: 100%;
+  }
 `;
 
 export const GridName = styled.div`
@@ -98,6 +111,10 @@ export const GridPrice = styled.p`
 
 const GridSidebar = styled.div`
   grid-area: sidebar;
+
+  @media (max-width: 1000px) {
+    margin-top: 12rem;
+  }
 
   & h3 {
     font-size: 1.8rem;

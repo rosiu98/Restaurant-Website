@@ -85,9 +85,12 @@ const OrderScreen = ({ match, history }) => {
   ) : (
     <>
       <Navbar />
-      <PageHero name={`Order ${order._id}`} title={"/ Order"} />
+      <PageHero
+        name={`Order ${order?._id.toString().substring(0, 10)}...`}
+        title={"/ Order"}
+      />
       <div style={{ backgroundColor: "#FAF7F2" }}>
-        <section className="place-order">
+        <section className="place-order done">
           <div className="place-order-items">
             <div className="shipping">
               <h2>SHIPPING</h2>

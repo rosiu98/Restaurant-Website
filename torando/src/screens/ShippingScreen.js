@@ -20,6 +20,10 @@ const Map = styled.section`
   margin: 0 auto;
   width: 1170px;
   height: 400px;
+
+  @media (max-width: 1180px) {
+    width: 80%;
+  }
 `;
 
 export const InputContainer = styled.div`

@@ -26,6 +26,11 @@ const ProductDetails = styled.section`
   display: grid;
   gap: 3rem;
   grid-template-columns: 1fr 1fr;
+
+  @media (max-width: 1180px) {
+    width: 80%;
+    grid-template-columns: 1fr;
+  }
 `;
 
 const ProductImage = styled.div`
@@ -37,7 +42,9 @@ const ProductImage = styled.div`
   border-radius: 40px;
 `;
 
-const ProductContent = styled.div``;
+const ProductContent = styled.div`
+  text-align: center;
+`;
 
 const ProductTitle = styled.div`
   margin-bottom: 3rem;
@@ -68,6 +75,12 @@ const ProductTitle = styled.div`
 const ProductPrice = styled.div`
   margin-bottom: 3rem;
 
+  @media (max-width: 1180px) {
+    & .rating {
+      justify-content: center;
+    }
+  }
+
   & p {
     font-size: 2.5rem;
     margin-bottom: 1rem;
@@ -80,6 +93,10 @@ const ProductButtons = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
+
+  @media (max-width: 1180px) {
+    justify-content: center;
+  }
 `;
 
 const ProductQty = styled.div`

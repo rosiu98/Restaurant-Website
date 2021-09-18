@@ -17,9 +17,15 @@ import {
   GridItem,
   GridName,
   GridPrice,
-  GridTitle,
 } from "../screens/PopularDishesScreen";
 import Rating from "./Rating";
+import styled from "styled-components";
+
+const GridTitle = styled.h3`
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 1rem 0 1rem 0;
+`;
 
 // install Swiper modules
 SwiperCore.use([Autoplay, Navigation]);
@@ -50,7 +56,18 @@ const ProductTop = () => {
       <Heading paragraph={"Our Popular Products"} />
 
       <Swiper
-        slidesPerView={3}
+        breakpoints={{
+          // when window width is >= 640px
+          640: {
+            width: 640,
+            slidesPerView: 1,
+          },
+          // when window width is >= 768px
+          768: {
+            width: 768,
+            slidesPerView: 2,
+          },
+        }}
         spaceBetween={30}
         autoplay={{
           delay: 3500,
