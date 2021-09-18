@@ -23,7 +23,22 @@ const PopularScreen = () => {
       <Heading name={"Our Popular Menu"} paragraph={"WENT TO EAT?"} />
 
       <Swiper
-        slidesPerView={3}
+        breakpoints={{
+          // when window width is >= 640px
+          640: {
+            width: 640,
+            slidesPerView: 1,
+          },
+          // when window width is >= 768px
+          768: {
+            width: 768,
+            slidesPerView: 2,
+          },
+          1140: {
+            width: 768,
+            slidesPerView: 3,
+          },
+        }}
         spaceBetween={30}
         autoplay={{
           delay: 3500,

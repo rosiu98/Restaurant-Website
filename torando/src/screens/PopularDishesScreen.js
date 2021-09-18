@@ -18,6 +18,11 @@ export const Grid = styled.div`
   @media (max-width: 1000px) {
     grid-template-columns: max-content max-content;
   }
+
+  @media (max-width: 800px) {
+    grid-template-columns: max-content;
+    padding: 2rem;
+  }
 `;
 
 export const GridItem = styled.div`
@@ -25,6 +30,14 @@ export const GridItem = styled.div`
   background-color: ${(props) => props.color || "#faf7f2"};
   border-radius: 4rem;
   transition: 0.4s all ease-in;
+
+  @media (max-width: 800px) {
+    padding: 4rem;
+  }
+
+  @media (max-width: 500px) {
+    padding: 2rem;
+  }
 
   & a {
     text-decoration: none;

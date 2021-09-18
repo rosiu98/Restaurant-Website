@@ -59,17 +59,23 @@ const LandingScreen = () => {
 
       <motion.div
         className="circle"
-        initial={{ x: "30%", y: "-50%", opacity: 0 }}
-        animate={{ x: "-25%", y: "-50%", opacity: 1 }}
-        transition={{ delay: 0.5, duration: 1.5, type: "spring" }}
+        // initial={{ x: "25%", y: "-50%", opacity: 0 }}
+        // animate={{ x: "-25%", y: "-50%", opacity: 1 }}
+        // transition={{ delay: 0.5, duration: 1.5, type: "spring" }}
       >
-        <img src={circle} alt="circle" />
+        <motion.img
+          initial={{ x: "100vw", y: 0, opacity: 0 }}
+          animate={{ x: 0, y: 0, opacity: 1 }}
+          transition={{ duration: 1.2 }}
+          src={circle}
+          alt="circle"
+        />
       </motion.div>
       <motion.div
         className="photo"
         initial={{ x: "100vh" }}
         animate={{ x: 0 }}
-        transition={{ duration: 1 }}
+        transition={{ duration: 1.2 }}
       >
         <div className="leafs">
           <img src={leafs} alt="liscie" />

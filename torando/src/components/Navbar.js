@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../img/LOGO.svg";
 import icon from "../img/Group.svg";
 import { Link, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import user from "../img/user.svg";
 import { logout } from "../actions/userActions";
+import { motion } from "framer-motion";
+import { useMediaQuery } from "react-responsive";
 
 const Navbar = () => {
   // const currentRoute = useHistory().location.pathname.toLowerCase();
+
+  const isDesktop = useMediaQuery({ query: "(min-width: 1170px)" });
+
+  const [showLinks, setShowLinks] = useState(false);
   const dispatch = useDispatch();
 
   const [list, setList] = useState(false);
@@ -23,13 +29,21 @@ const Navbar = () => {
     dispatch(logout());
   };
 
+  useEffect(() => {
+    if (isDesktop) {
+      setShowLinks(true);
+    } else {
+      setShowLinks(false);
+    }
+  }, [isDesktop]);
+
   return (
     <nav>
-      <div className="logo">
+      <Link to="/" className="logo">
         <img src={logo} alt="LOGO" />
-      </div>
+      </Link>
 
-      <div className="links">
+      <motion.div className="links" animate={{ x: showLinks ? 0 : -300 }}>
         <NavLink activeClassName="active" to="/" exact>
           HOME
         </NavLink>
@@ -45,7 +59,7 @@ const Navbar = () => {
         <NavLink activeClassName="active" to="/reservation">
           BOOK A TABLE
         </NavLink>
-      </div>
+      </motion.div>
 
       <div className="buttons">
         <Link
@@ -54,6 +68,11 @@ const Navbar = () => {
         >
           Order Online
         </Link>
+        <i
+          style={{ fontSize: "4rem" }}
+          className="fas fa-bars"
+          onClick={() => setShowLinks(!showLinks)}
+        ></i>
         <Link to="/cart" style={{ position: "relative" }}>
           <img src={icon} alt="icon-shop" />
           {cartItems.length > 0 && <span>{cartItems.length}</span>}

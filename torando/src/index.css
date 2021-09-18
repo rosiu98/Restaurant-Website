@@ -143,7 +143,7 @@ nav {
   height: 15px;
   width: 15px;
   position: absolute;
-  right: 40px;
+  right: 2%;
 }
 
 .one .links-login {
@@ -232,6 +232,7 @@ main {
   display: flex;
   gap: 5rem;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .content-links a {
@@ -281,6 +282,7 @@ main {
   left: 50%;
   top: 50%;
   transform: translate(-25%, -50%);
+  overflow: hidden;
 }
 
 .circle img {
@@ -297,20 +299,6 @@ main {
   position: absolute;
   top: 0;
   right: 0;
-}
-
-@media screen and (max-width: 1000px) {
-  .links {
-    display: none;
-  }
-
-  .circle {
-    display: none;
-  }
-
-  .logo {
-    margin-right: auto;
-  }
 }
 
 .heading {
@@ -398,9 +386,13 @@ main {
   object-fit: contain;
 }
 
+.swiper-wrapper {
+  flex-basis: 300px;
+}
+
 .swiper-container {
   margin-top: 8rem !important;
-  width: 80%;
+  width: 780px;
   margin: auto;
   position: relative !important;
 
@@ -509,6 +501,7 @@ main {
   margin-top: 7.5rem;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   align-items: center;
   gap: 3rem;
 }
@@ -571,6 +564,7 @@ main {
 .special-footer {
   display: flex;
   align-items: flex-end;
+  flex-wrap: wrap;
 }
 
 .special-footer p {
@@ -1520,4 +1514,182 @@ h2:hover {
   font-style: normal;
   font-size: 1.5rem;
   color: #706c61;
+}
+
+.fa-bars {
+  display: none;
+  cursor: pointer;
+}
+
+.none {
+  display: none;
+}
+
+@media screen and (max-width: 1300px) {
+  .circle {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1170px) {
+  main {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .content-buttons {
+    margin-bottom: 8rem;
+  }
+
+  .links {
+    position: fixed;
+    bottom: 0;
+    filter: drop-shadow(6px 14px 5px var(--color-grey));
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    left: -20px;
+    margin-left: 0;
+
+    /* width: 100%; */
+    padding: 5rem;
+    height: 100vh;
+    background-color: white;
+  }
+  .logo {
+    margin-right: auto;
+  }
+
+  .logo img {
+    width: 100%;
+  }
+
+  .buttons .button-brown {
+    display: none;
+  }
+
+  .buttons .fa-bars {
+    display: inline;
+  }
+
+  .swiper-container {
+    width: 80%;
+  }
+
+  .how-content h1 {
+    font-size: 7.5rem;
+  }
+
+  .footer-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer-h3 {
+    grid-column: 1 / span 2;
+  }
+}
+
+@media screen and (max-width: 880px) {
+  .how-content {
+    border-radius: unset;
+  }
+
+  .photo {
+    display: none;
+  }
+
+  main {
+    grid-template-columns: 1fr;
+    padding: 2rem;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tortilla img {
+    display: none;
+  }
+
+  .content-text,
+  .content-paragraph {
+    width: 100%;
+  }
+
+  .content {
+    text-align: center;
+  }
+
+  .content-buttons,
+  .content-links {
+    justify-content: center;
+  }
+
+  .special {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+  .special-content {
+    width: 100%;
+  }
+
+  .special-offer {
+    order: -1;
+    margin: 0;
+  }
+
+  .special-offer p {
+    margin-left: 0;
+    margin-right: 2rem;
+  }
+
+  .blog {
+    padding: 3rem;
+  }
+
+  .footer {
+    padding: 3rem;
+  }
+
+  .one::after {
+    right: unset;
+    margin-left: 60px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  nav {
+    padding: 2rem;
+    justify-content: space-between;
+  }
+
+  .logo {
+    margin-right: 2rem;
+  }
+
+  .footer-bottom {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .blog-post {
+    min-width: unset;
+  }
+
+  .how-content h1 {
+    font-size: 4.5rem;
+  }
+
+  .content-text h1 {
+    font-size: 5rem;
+  }
+
+  .content-paragraph {
+    font-size: 2rem;
+  }
+
+  .one::after {
+    display: none;
+  }
 }
