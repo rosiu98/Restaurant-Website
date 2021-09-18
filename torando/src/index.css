@@ -984,6 +984,12 @@ main {
   width: 1170px;
 }
 
+.inputs-map .sc-iCoGMd {
+  grid-column: 1 / span 2;
+  max-width: 100%;
+  margin-top: 2rem;
+}
+
 .inputs-map button {
   margin-top: 3rem;
   grid-column: 1 / span 2;

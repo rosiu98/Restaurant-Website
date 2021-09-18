@@ -15,6 +15,7 @@ import circleToPolygon from "circle-to-polygon";
 import HowItWorksScreen from "./HowItWorksScreen";
 import { ButtonAddToCart2 } from "./CartScreen";
 import CheckoutSteps from "../components/CheckoutSteps";
+import { Message } from "../components/Message";
 
 const Map = styled.section`
   margin: 0 auto;
@@ -57,6 +58,8 @@ const ShippingScreen = ({ history }) => {
 
   let places;
 
+  const [message, setMessage] = useState("");
+
   const [coordinates, setCoordinates] = useState({});
   const [address, setAddress] = useState(shippingAddress.address);
   const [autocomplete, setAutocomplete] = useState("");
@@ -90,6 +93,7 @@ const ShippingScreen = ({ history }) => {
       setAddress(places);
     } else {
       console.log("Nie ma Cie w kole");
+      setMessage(`We'are sorry, but we do not deliver to your place 🔈`);
     }
   };
 
@@ -163,6 +167,7 @@ const ShippingScreen = ({ history }) => {
         </GoogleMapReact>
       </Map>
       <form className="inputs-map" onSubmit={submitHandler}>
+        {message && <Message color="red">{message}</Message>}
         <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
           <InputContainer>
             <h2>Address</h2>
@@ -196,7 +201,19 @@ const ShippingScreen = ({ history }) => {
             onChange={(e) => setCountry(e.target.value)}
           />
         </InputContainer>
-        <ButtonAddToCart2 type="submit">Next</ButtonAddToCart2>
+        {message ? (
+          <ButtonAddToCart2
+            style={{
+              backgroundColor: "grey",
+            }}
+            disabled={true}
+            type="submit"
+          >
+            Next
+          </ButtonAddToCart2>
+        ) : (
+          <ButtonAddToCart2 type="submit">Next</ButtonAddToCart2>
+        )}
       </form>
       <div style={{ textAlign: "center", marginBottom: "4rem" }}></div>
 
