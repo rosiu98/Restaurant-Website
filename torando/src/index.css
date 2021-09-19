@@ -1073,7 +1073,7 @@ main {
   display: flex;
   align-items: center;
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 .place-order-items .order-item::after {
@@ -1095,6 +1095,12 @@ main {
 .place-order-items .order-details {
   display: flex;
   flex-basis: 100%;
+}
+
+.place-order-items .order-details span {
+  display: block;
+  margin: 1.5rem 0;
+  color: #9f9f9f;
 }
 
 .place-order-items .order-details a {
@@ -1566,8 +1572,10 @@ h2:hover {
 
 .cart-product-toppings {
   display: flex;
-  gap: 1rem;
-  align-items: baseline;
+    flex-wrap: wrap;
+    grid-gap: 1rem;
+    gap: 1rem;
+    align-items: end;
 }
 
 .cart-product-toppings span {

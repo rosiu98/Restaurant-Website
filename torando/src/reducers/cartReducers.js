@@ -31,15 +31,20 @@ export const cartReducer = (
       );
       // checking if product is in cart
 
+      const checkingToppings = state.cartItems.find(
+        (item) => item.toppings === action.payload.toppings
+      );
+
       return {
         ...state,
-        cartItems: inCart
-          ? state.cartItems.map((item) =>
-              item.id === action.payload.id
-                ? { ...item, qty: item.qty + action.payload.qty }
-                : item
-            )
-          : [...state.cartItems, { ...item }],
+        cartItems:
+          inCart && checkingToppings
+            ? state.cartItems.map((item) =>
+                item.id === action.payload.id
+                  ? { ...item, qty: item.qty + action.payload.qty }
+                  : item
+              )
+            : [...state.cartItems, { ...item }],
       };
     // if (existItem) {
     //   return {

@@ -15,7 +15,7 @@ const PlaceOrderScreen = ({ history }) => {
 
   // Calculate prices
   cart.itemsPrice = cart.cartItems.reduce(
-    (acc, item) => acc + item.price * item.qty,
+    (acc, item) => acc + item.price * item.qty + item.toppings.length * 2,
     0
   );
   cart.shippingPrice = 5;
@@ -81,7 +81,15 @@ const PlaceOrderScreen = ({ history }) => {
                         <img src={item.image} alt={item.name} />
                       </div>
                       <div className="order-details">
-                        <Link to={`/menu/${item.product}`}>{item.name}</Link>
+                        <Link to={`/menu/${item.id}`}>
+                          {item.name}
+                          <div>
+                            {item.toppings.map((topping) => (
+                              <span key={topping}>{topping}</span>
+                            ))}
+                          </div>
+                        </Link>
+
                         <p>
                           {item.qty} x ${item.price} = ${item.qty * item.price}
                         </p>

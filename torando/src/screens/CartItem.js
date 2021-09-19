@@ -36,11 +36,13 @@ const CartItem = ({ item }) => {
           <p>
             Price: <span>${item.price}.00</span>
           </p>
-          {item.toppings && (
+          {item.toppings.length > 0 && (
             <div className="cart-product-toppings">
               <span>Toppings: </span>
               {item.toppings &&
-                item.toppings.map((topping) => <p>{topping}</p>)}
+                item.toppings.map((topping, index) => (
+                  <p key={index}>{topping}</p>
+                ))}
             </div>
           )}
         </div>
@@ -56,7 +58,7 @@ const CartItem = ({ item }) => {
         <input
           type="number"
           value={input}
-          //   onChange={() => setInput(item.qty)}
+          onChange={() => setInput(item.qty)}
         />
         <div
           className="minus"

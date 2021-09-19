@@ -75,7 +75,9 @@ const Navbar = () => {
         ></i>
         <Link to="/cart" style={{ position: "relative" }}>
           <img src={icon} alt="icon-shop" />
-          {cartItems.length > 0 && <span>{cartItems.length}</span>}
+          {cartItems.length > 0 && (
+            <span>{cartItems.reduce((acc, item) => acc + item.qty, 0)}</span>
+          )}
         </Link>
         {userInfo ? (
           <div onClick={() => setList(!list)} className="login-button one">

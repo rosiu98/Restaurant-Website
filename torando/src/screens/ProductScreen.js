@@ -145,6 +145,7 @@ const ProductQty = styled.div`
   background-color: #faf7f2;
   border-radius: 10px;
   flex-basis: 200px;
+  flex: 0;
 
   & p {
     font-size: 1.6rem;

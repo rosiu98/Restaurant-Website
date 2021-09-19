@@ -134,8 +134,8 @@ const CartScreen = ({ history }) => {
               </div>
               <div className="cart-trash"></div>
             </div>
-            {cartItems.map((item) => (
-              <CartItem item={item} key={item.id} />
+            {cartItems.map((item, index) => (
+              <CartItem item={item} key={index} />
             ))}
 
             <div className="cart-total">

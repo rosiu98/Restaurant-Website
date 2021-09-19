@@ -138,7 +138,14 @@ const OrderScreen = ({ match, history }) => {
                         <img src={`/${item.image}`} alt={item.name} />
                       </div>
                       <div className="order-details">
-                        <Link to={`/menu/${item.product}`}>{item.name}</Link>
+                        <Link to={`/menu/${item.id}`}>
+                          {item.name}
+                          <div>
+                            {item.toppings.map((item) => (
+                              <span>{item}</span>
+                            ))}
+                          </div>
+                        </Link>
                         <p>
                           {item.qty} x ${item.price} = ${item.qty * item.price}
                         </p>
