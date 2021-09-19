@@ -44,7 +44,9 @@ const ProductImage = styled.div`
 `;
 
 const ProductContent = styled.div`
-  text-align: center;
+  @media (max-width: 1180px) {
+    text-align: center;
+  }
 `;
 
 const ProductTitle = styled.div`
@@ -87,6 +89,43 @@ const ProductPrice = styled.div`
     margin-bottom: 1rem;
     font-weight: 700;
     color: #1e1d23;
+  }
+`;
+
+const ProductToppings = styled.ul`
+  display: inline-grid;
+  list-style: none;
+  max-width: 300px;
+  grid-template-columns: 1fr 1fr;
+  list-style: none;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+
+  & li {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover {
+      & p {
+        transition: 0.2s all ease-in-out;
+        color: var(--color-dark);
+      }
+
+      & circle {
+        transition: 0.2s all linear;
+        fill: var(--color-yellow);
+      }
+    }
+  }
+
+  & svg {
+    margin-right: 1rem;
+  }
+
+  & p {
+    font-size: 1.8rem;
+    color: #e5e5e5;
   }
 `;
 
@@ -160,6 +199,34 @@ const ProductScreen = ({ match, history }) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [loadder, setLoadder] = useState(true);
+  const [toppings, setTopping] = useState([]);
+
+  let toppando = [
+    "mushrooms",
+    "peppers",
+    "onions",
+    "olives",
+    "extra cheese",
+    "tomatoes",
+  ];
+
+  const addTopping = (topping) => {
+    let newToppings;
+    if (!toppings.includes(topping)) {
+      // if topping dont have topping in array
+      newToppings = [...toppings, topping];
+    } else {
+      // zmapuj arrye i wybierz wszystkie oprocz tego ktory jest rowny toppingowi wybranemu
+      newToppings = toppings.filter((item) => item !== topping);
+    }
+    //  else {
+    //   newToppings = [...toppings];
+    // }
+
+    setTopping(newToppings);
+  };
+
+  console.log(toppings);
 
   const decreaseInput = () => {
     if (qty > 1) setQty(qty - 1);
@@ -193,7 +260,7 @@ const ProductScreen = ({ match, history }) => {
   }, [match, dispatch, successProductReview]);
 
   const addToCartHandler = () => {
-    dispatch(addToCart(product._id, qty));
+    dispatch(addToCart(product._id, qty, toppings));
     history.push("/cart");
     // history.push(`/cart/${match.params.id}?qty=${qty}`);
   };
@@ -234,12 +301,37 @@ const ProductScreen = ({ match, history }) => {
                 </ul>
               </ProductTitle>
               <ProductPrice>
-                <p>${product.price}.99</p>
+                <p>${product.price + toppings.length * 2}.99</p>
                 <Rating
                   value={product.rating}
                   text={`${product.numReviews} Reviews`}
                 />
               </ProductPrice>
+              <ProductToppings>
+                {toppando.map((topping) => (
+                  <li
+                    className={
+                      toppings.includes(topping) ? "active-topping" : ""
+                    }
+                    onClick={() => addTopping(topping)}
+                  >
+                    <svg
+                      width="2rem"
+                      height="2rem"
+                      viewBox="0 0 260 260"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="130" cy="130" r="130" fill="#e5e5e5" />
+                      <path
+                        d="M119.8 192.4L57.3999 140.4L88.5999 109.2L119.8 140.4L182.2 62.3999L208.2 83.1999L119.8 192.4Z"
+                        fill="white"
+                      />
+                    </svg>
+                    <p>{topping}</p>
+                  </li>
+                ))}
+              </ProductToppings>
               <ProductButtons>
                 <ProductQty>
                   <p>QUANTITY</p>

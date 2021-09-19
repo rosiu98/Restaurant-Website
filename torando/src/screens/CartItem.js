@@ -27,7 +27,7 @@ const CartItem = ({ item }) => {
 
   return (
     <div className="cart">
-      <Link to={`/menu/${item.product}`} className="cart-product">
+      <Link to={`/menu/${item.id}`} className="cart-product">
         <div className="cart-product-image">
           <img src={`/${item.image}`} alt={item.name} />
         </div>
@@ -36,6 +36,13 @@ const CartItem = ({ item }) => {
           <p>
             Price: <span>${item.price}.00</span>
           </p>
+          {item.toppings && (
+            <div className="cart-product-toppings">
+              <span>Toppings: </span>
+              {item.toppings &&
+                item.toppings.map((topping) => <p>{topping}</p>)}
+            </div>
+          )}
         </div>
       </Link>
       <div className="cart-qty">
