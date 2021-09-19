@@ -78,7 +78,11 @@ const FooterScreen = () => {
         <div className="footer-blog">
           <h3 className="footer-h3">RECENT BLOG</h3>
           {blogNew.slice(0, 2).map((blog) => (
-            <Link to={`/blogs/${blog._id}`} className="footer-posts">
+            <Link
+              to={`/blogs/${blog._id}`}
+              key={blog._id}
+              className="footer-posts"
+            >
               <img src={`${blog.image}`} alt="imags" />
               <div className="footer-posts-info">
                 <p>{blog.title.substring(0, 25) + "..."}</p>

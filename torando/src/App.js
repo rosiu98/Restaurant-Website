@@ -23,11 +23,13 @@ import UserListScreen from "./screens/UserListScreen";
 import "date-fns";
 import DateFnsUtils from "@date-io/date-fns";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import PageToTop from "./components/PageToTop";
 
 function App() {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Router>
+        <PageToTop />
         <Route path="/reservation" component={ReservationScreen} exact />
         <Route path="/blogs/:id" component={BlogPageScreen} />
         <Route path="/blogs" component={BlogsScreen} exact />

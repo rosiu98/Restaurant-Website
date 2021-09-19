@@ -1,14 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeFromCart } from "../actions/cartActions";
+import { useSelector } from "react-redux";
+
 import Navbar from "../components/Navbar";
 import PageHero from "../components/PageHero";
 import FooterScreen from "../screens/FooterScreen";
-import trash from "../img/trash.svg";
 import styled from "styled-components";
 import Lottie from "lottie-react-web";
 import animation from "../img/empty-cart.json";
+import CartItem from "./CartItem";
+import Loading from "../components/Loading";
 
 const ButtonAddToCart = styled(Link)`
   background-color: var(--color-yellow);
@@ -77,37 +78,30 @@ const EmptyCard = styled.div`
   }
 `;
 
-const CartScreen = ({ match, location, history }) => {
-  const productId = match.params.id;
+const CartScreen = ({ history }) => {
+  // const qty = location.search ? Number(location.search.split("=")[1]) : 1;
 
-  const qty = location.search ? Number(location.search.split("=")[1]) : 1;
+  const [loading, setLoading] = useState(false);
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1200);
+
+    window.scrollTo(0, 0);
+  }, []);
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
-
-  useEffect(() => {
-    if (productId) {
-      dispatch(addToCart(productId, qty));
-    }
-  }, [dispatch, productId, qty]);
-
-  const minusHandler = (item) => {
-    if (item.qty > 1) {
-      dispatch(addToCart(item.product, item.qty - 1));
-    }
-  };
-
-  const removeFromCartHandler = (id) => {
-    dispatch(removeFromCart(id));
-  };
 
   const checkoutHandler = () => {
     history.push("/login?redirect=shipping");
   };
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <>
       <Navbar />
       <PageHero title={"/ Cart"} name={"SHOPPING CART"} />
@@ -141,44 +135,7 @@ const CartScreen = ({ match, location, history }) => {
               <div className="cart-trash"></div>
             </div>
             {cartItems.map((item) => (
-              <div className="cart" key={item.product}>
-                <Link to={`/menu/${item.product}`} className="cart-product">
-                  <div className="cart-product-image">
-                    <img src={`/${item.image}`} alt={item.name} />
-                  </div>
-                  <div className="cart-product-main">
-                    <h1>{item.name}</h1>
-                    <p>
-                      Price: <span>${item.price}.00</span>
-                    </p>
-                  </div>
-                </Link>
-                <div className="cart-qty">
-                  <div
-                    className="plus"
-                    onClick={() =>
-                      dispatch(addToCart(item.product, item.qty + 1))
-                    }
-                  >
-                    +
-                  </div>
-                  <input
-                    type="number"
-                    value={item.qty}
-                    onChange={(e) => e.target.value}
-                  />
-                  <div className="minus" onClick={() => minusHandler(item)}>
-                    -
-                  </div>
-                </div>
-                <div className="cart-trash">
-                  <img
-                    onClick={() => removeFromCartHandler(item.product)}
-                    src={trash}
-                    alt="trash"
-                  />
-                </div>
-              </div>
+              <CartItem item={item} key={item.id} />
             ))}
 
             <div className="cart-total">

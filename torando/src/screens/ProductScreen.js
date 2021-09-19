@@ -17,6 +17,7 @@ import { Link } from "react-router-dom";
 import { ButtonAddToCart2 } from "./CartScreen";
 import ProductTop from "../components/ProductTop";
 import Meta from "../components/Meta";
+import { addToCart } from "../actions/cartActions";
 
 const ProductDetails = styled.section`
   padding-top: 12rem;
@@ -158,6 +159,7 @@ const ProductScreen = ({ match, history }) => {
   const [qty, setQty] = useState(1);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
+  const [loadder, setLoadder] = useState(true);
 
   const decreaseInput = () => {
     if (qty > 1) setQty(qty - 1);
@@ -176,6 +178,11 @@ const ProductScreen = ({ match, history }) => {
     productReviewCreate;
 
   useEffect(() => {
+    setLoadder(true);
+    setTimeout(() => {
+      setLoadder(false);
+    }, 1200);
+
     if (successProductReview) {
       alert("Review Submitted!");
       setRating(0);
@@ -186,7 +193,9 @@ const ProductScreen = ({ match, history }) => {
   }, [match, dispatch, successProductReview]);
 
   const addToCartHandler = () => {
-    history.push(`/cart/${match.params.id}?qty=${qty}`);
+    dispatch(addToCart(product._id, qty));
+    history.push("/cart");
+    // history.push(`/cart/${match.params.id}?qty=${qty}`);
   };
 
   const submitHandler = (e) => {
@@ -203,7 +212,7 @@ const ProductScreen = ({ match, history }) => {
     <div>
       <Navbar />
       <PageHero title={product?.name || ""} product name={"PRODUCT DETAILS"} />
-      {loading ? (
+      {loading || loadder ? (
         <Loading />
       ) : error ? (
         <h1>{error}</h1>
