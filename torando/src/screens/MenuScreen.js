@@ -302,8 +302,6 @@ const MenuScreen = ({ match }) => {
                 <h3>CATEGORIES</h3>
                 <div>
                   {categories.map((c, index) => {
-                    console.log(c.length);
-
                     if (c === "ALL") {
                       return (
                         <button

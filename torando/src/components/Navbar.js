@@ -92,9 +92,7 @@ const Navbar = () => {
                 <div className="links-item">
                   <Link to="/profile">Profile</Link>
                 </div>
-                <div onClick={logoutHandler} className="links-item">
-                  Logout
-                </div>
+
                 {userInfo && userInfo.isAdmin && (
                   <>
                     <div className="links-item">
@@ -109,8 +107,14 @@ const Navbar = () => {
                     <div className="links-item">
                       <Link to="/admin/blogs">Blogs</Link>
                     </div>
+                    <div className="links-item">
+                      <Link to="/admin/reservation">Reservations</Link>
+                    </div>
                   </>
                 )}
+                <div onClick={logoutHandler} className="links-item">
+                  Logout
+                </div>
               </div>
             )}
           </div>

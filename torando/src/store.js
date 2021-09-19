@@ -20,7 +20,10 @@ import {
   blogNewestReducer,
   blogCommentCreateReducer,
 } from "./reducers/blogReducers";
-import { reservationCreateReducer } from "./reducers/reservationReducers";
+import {
+  reservationCreateReducer,
+  reservationListReducer,
+} from "./reducers/reservationReducers";
 import { cartReducer } from "./reducers/cartReducers";
 import {
   userLoginReducer,
@@ -55,6 +58,7 @@ const reducer = combineReducers({
   blogUpdate: blogUpdateReducer,
   blogCommentCreate: blogCommentCreateReducer,
   reservationCreate: reservationCreateReducer,
+  reservationList: reservationListReducer,
   cart: cartReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,

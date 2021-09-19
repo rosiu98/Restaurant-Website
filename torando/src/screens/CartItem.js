@@ -34,7 +34,7 @@ const CartItem = ({ item }) => {
         <div className="cart-product-main">
           <h1>{item.name}</h1>
           <p>
-            Price: <span>${item.price}.00</span>
+            Price: <span>${item.price + item.toppings.length * 2}.00</span>
           </p>
           {item.toppings.length > 0 && (
             <div className="cart-product-toppings">
