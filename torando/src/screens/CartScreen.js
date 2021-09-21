@@ -99,6 +99,11 @@ const CartScreen = ({ history }) => {
     history.push("/login?redirect=shipping");
   };
 
+  const checkingToppings = cartItems.map((item) =>
+    item.toppings.includes("onions") ? "hello" : "nie ma"
+  );
+  console.log(checkingToppings);
+
   return loading ? (
     <Loading />
   ) : (

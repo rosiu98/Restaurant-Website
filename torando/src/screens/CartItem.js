@@ -40,9 +40,7 @@ const CartItem = ({ item }) => {
             <div className="cart-product-toppings">
               <span>Toppings: </span>
               {item.toppings &&
-                item.toppings.map((topping, index) => (
-                  <p key={index}>{topping}</p>
-                ))}
+                item.toppings.map((topping) => <p>{topping}</p>)}
             </div>
           )}
         </div>
@@ -73,7 +71,7 @@ const CartItem = ({ item }) => {
         <img
           src={trash}
           alt="trash"
-          onClick={() => removeFromCartHandler(item.id)}
+          onClick={() => removeFromCartHandler(item)}
         />
       </div>
     </div>
