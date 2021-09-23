@@ -1572,10 +1572,10 @@ h2:hover {
 
 .cart-product-toppings {
   display: flex;
-    flex-wrap: wrap;
-    grid-gap: 1rem;
-    gap: 1rem;
-    align-items: end;
+  flex-wrap: wrap;
+  grid-gap: 1rem;
+  gap: 1rem;
+  align-items: flex-end;
 }
 
 .cart-product-toppings span {

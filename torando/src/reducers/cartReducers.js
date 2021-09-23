@@ -6,6 +6,8 @@ import {
   CART_SAVE_SHIPPING_ADDRESS,
 } from "../constants/cartConstants";
 
+const equals = (a, b) => JSON.stringify(a.sort()) === JSON.stringify(b.sort());
+
 export const cartReducer = (
   state = { cartItems: [], shippingAddress: {} },
   action
@@ -35,15 +37,20 @@ export const cartReducer = (
       //   (itemo) => itemo.toppings === action.payload.toppings
       // );
 
+      const checkingToppings = state.cartItems.find((product) =>
+        equals(product.toppings, action.payload.toppings) ? true : false
+      );
+
       return {
         ...state,
-        cartItems: inCart
-          ? state.cartItems.map((item) =>
-              item.id === action.payload.id
-                ? { ...item, qty: item.qty + action.payload.qty }
-                : item
-            )
-          : [...state.cartItems, { ...item }],
+        cartItems:
+          inCart && checkingToppings
+            ? state.cartItems.map((item) =>
+                equals(item.toppings, action.payload.toppings)
+                  ? { ...item, qty: item.qty + action.payload.qty }
+                  : item
+              )
+            : [...state.cartItems, { ...item }],
       };
     // if (existItem) {
     //   return {
@@ -71,7 +78,12 @@ export const cartReducer = (
     case CART_REMOVE_ITEM:
       return {
         ...state,
-        cartItems: state.cartItems.filter((x) => x.id !== action.payload.id),
+        cartItems:
+          state.cartItems.length > 1
+            ? state.cartItems.filter(
+                (x) => !equals(x.toppings, action.payload.toppings)
+              )
+            : state.cartItems.filter((x) => x.id !== action.payload.id),
         // cartItems: [],
       };
 

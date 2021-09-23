@@ -52,6 +52,7 @@ const GridItems = styled.div`
 
 const GridItem = styled.div`
   padding: 3rem;
+  align-self: baseline;
   background-color: white;
   border-radius: 4rem;
   transition: 0.4s all ease-in;

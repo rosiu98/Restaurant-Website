@@ -88,8 +88,6 @@ const CartScreen = ({ history }) => {
     setTimeout(() => {
       setLoading(false);
     }, 1200);
-
-    window.scrollTo(0, 0);
   }, []);
 
   const cart = useSelector((state) => state.cart);
@@ -98,11 +96,6 @@ const CartScreen = ({ history }) => {
   const checkoutHandler = () => {
     history.push("/login?redirect=shipping");
   };
-
-  const checkingToppings = cartItems.map((item) =>
-    item.toppings.includes("onions") ? "hello" : "nie ma"
-  );
-  console.log(checkingToppings);
 
   return loading ? (
     <Loading />

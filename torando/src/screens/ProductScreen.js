@@ -227,8 +227,6 @@ const ProductScreen = ({ match, history }) => {
     setTopping(newToppings);
   };
 
-  console.log(toppings);
-
   const decreaseInput = () => {
     if (qty > 1) setQty(qty - 1);
   };
@@ -309,8 +307,9 @@ const ProductScreen = ({ match, history }) => {
                 />
               </ProductPrice>
               <ProductToppings>
-                {toppando.map((topping) => (
+                {toppando.map((topping, index) => (
                   <li
+                    key={index}
                     className={
                       toppings.includes(topping) ? "active-topping" : ""
                     }
