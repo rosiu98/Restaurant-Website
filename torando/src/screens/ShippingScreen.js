@@ -91,6 +91,7 @@ const ShippingScreen = ({ history }) => {
     if (inPolygon) {
       console.log("Jestes w kole");
       setAddress(places);
+      setMessage("");
     } else {
       console.log("Nie ma Cie w kole");
       setMessage(`We'are sorry, but we do not deliver to your place 🔈`);
