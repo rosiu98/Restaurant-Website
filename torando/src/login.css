@@ -227,3 +227,18 @@ code {
   transition: 0.3s;
   font-size: 1.5rem;
 }
+
+@media (max-width: 1000px) {
+  .container {
+    margin-top: 8rem;
+    position: unset;
+    transform: unset;
+  }
+
+  .background {
+    width: 50%;
+    transform: unset;
+    top: unset;
+    bottom: 0;
+  }
+}

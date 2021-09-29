@@ -47,15 +47,6 @@ const RegisterScreen = ({ location, history }) => {
     }
   };
 
-  //   const blurHandler = () => {
-  //     if (email === "") {
-  //       let focus = ref.current;
-  //       focus = focus.className.replace(/focus/g, "");
-
-  //       ref.current.className = focus;
-  //     }
-  //   };
-
   const submitHandler = (e) => {
     e.preventDefault();
     if (password === confirmPassword) {
