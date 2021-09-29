@@ -74,6 +74,10 @@ nav {
   font-size: 1.8rem;
   text-align: center;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   border-radius: 50%;
   background-color: var(--color-yellow);
 }
@@ -723,7 +727,12 @@ main {
   margin-bottom: 3rem;
 }
 
-.footer-links p {
+.footer-links {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-links a {
   margin-bottom: 1rem;
   color: white;
   font-size: 1.8rem;
@@ -1217,6 +1226,10 @@ main {
   opacity: 0.7;
   letter-spacing: 0.8px;
   margin-bottom: 1rem;
+}
+
+.customer-review a {
+  color: var(--color-brown);
 }
 
 .comment-form {
@@ -1726,6 +1739,14 @@ h2:hover {
   .footer-posts img {
     width: 100%;
     height: auto;
+  }
+
+  .footer-posts-info p {
+    margin: 0 auto;
+  }
+
+  .footer-bottom {
+    justify-content: center;
   }
 
   .tortilla img {

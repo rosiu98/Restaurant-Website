@@ -25,6 +25,7 @@ import DateFnsUtils from "@date-io/date-fns";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import PageToTop from "./components/PageToTop";
 import ReservationListScreen from "./screens/ReservationListScreen";
+import AboutScreen from "./screens/AboutScreen";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
       <Router>
         <PageToTop />
         <Route path="/reservation" component={ReservationScreen} exact />
+        <Route path="/about" component={AboutScreen} />
         <Route path="/blogs/:id" component={BlogPageScreen} />
         <Route path="/blogs" component={BlogsScreen} exact />
         <Route path="/order/:id" component={OrderScreen} />

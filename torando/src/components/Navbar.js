@@ -76,7 +76,9 @@ const Navbar = () => {
         <Link to="/cart" style={{ position: "relative" }}>
           <img src={icon} alt="icon-shop" />
           {cartItems.length > 0 && (
-            <span>{cartItems.reduce((acc, item) => acc + item.qty, 0)}</span>
+            <span>
+              <p>{cartItems.reduce((acc, item) => acc + item.qty, 0)}</p>
+            </span>
           )}
         </Link>
         {userInfo ? (

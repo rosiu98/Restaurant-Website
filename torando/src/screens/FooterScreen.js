@@ -67,12 +67,11 @@ const FooterScreen = () => {
         </div>
         <div className="footer-links">
           <h3 className="footer-h3">LINKS</h3>
-          <p>Home</p>
-          <p>About</p>
-          <p>News</p>
-          <p>Shop</p>
-          <p>Faq</p>
-          <p>Contact</p>
+          <Link to="/home">Home</Link>
+          <Link to="/about">About</Link>
+          <Link to="/menu">Menu</Link>
+          <Link to="blog">Blog</Link>
+          <Link to="/reservation">Book a Table</Link>
         </div>
 
         <div className="footer-blog">
@@ -90,14 +89,6 @@ const FooterScreen = () => {
               </div>
             </Link>
           ))}
-
-          {/* <div className="footer-posts">
-            <img src={`/${blogs[2].image}`} alt="imags" />
-            <div className="footer-posts-info">
-              <p>{blogs[2].title}</p>
-              <span>{blogs[2].date}</span>
-            </div>
-          </div> */}
         </div>
       </div>
       <div className="footer-line"></div>

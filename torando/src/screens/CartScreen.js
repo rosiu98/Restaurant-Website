@@ -105,7 +105,7 @@ const CartScreen = ({ history }) => {
       <PageHero title={"/ Cart"} name={"SHOPPING CART"} />
       <div style={{ backgroundColor: "#FAF7F2" }}>
         {cartItems.length === 0 ? (
-          <>
+          <div style={{ padding: "5rem 0" }}>
             <Lottie
               options={{ animationData: animation }}
               width={"300px"}
@@ -120,7 +120,7 @@ const CartScreen = ({ history }) => {
               </p>
               <ButtonAddToCart to="/menu">See our Menu</ButtonAddToCart>
             </EmptyCard>
-          </>
+          </div>
         ) : (
           <section className="shopping-cart">
             <div className="cart">
