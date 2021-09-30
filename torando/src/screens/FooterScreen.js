@@ -70,7 +70,7 @@ const FooterScreen = () => {
           <Link to="/home">Home</Link>
           <Link to="/about">About</Link>
           <Link to="/menu">Menu</Link>
-          <Link to="blog">Blog</Link>
+          <Link to="blogs">Blog</Link>
           <Link to="/reservation">Book a Table</Link>
         </div>
 

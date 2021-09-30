@@ -180,6 +180,7 @@ const ShippingScreen = ({ history }) => {
           <h2>City</h2>
           <input
             type="text"
+            required
             value={city}
             onChange={(e) => setCity(e.target.value)}
           />
@@ -189,6 +190,7 @@ const ShippingScreen = ({ history }) => {
           <h2>Postal Code</h2>
           <input
             type="text"
+            required
             value={postalCode}
             onChange={(e) => setPostalCode(e.target.value)}
           />
@@ -198,6 +200,7 @@ const ShippingScreen = ({ history }) => {
           <h2>Country</h2>
           <input
             type="text"
+            required
             value={country}
             onChange={(e) => setCountry(e.target.value)}
           />
